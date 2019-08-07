@@ -14,3 +14,5 @@ Route::group(['middleware' => 'web'], function () {
     // Logout
     Route::post('logout', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Auth\LoginController@logout','as'=>'logout']);
 });
+
+Route::get('admin', ['uses'=>'Bishopm\Churchsite\Http\Controllers\HomeController@admin','as'=>'admin']);

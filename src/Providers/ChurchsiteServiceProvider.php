@@ -21,9 +21,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         Schema::defaultStringLength(255);
-        if (! $this->app->routesAreCached()) {
-            require __DIR__.'/../Http/web.routes.php';
-        }
+        require __DIR__.'/../Http/web.routes.php';
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'churchsite');
         $this->loadMigrationsFrom(__DIR__.'/../Database/migrations');
         $this->publishes([__DIR__.'/../Assets' => public_path('vendor/bishopm')], 'public');
