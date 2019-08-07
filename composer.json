@@ -6,7 +6,7 @@
         "church",
         "website"
     ],
-    "homepage": "https://github.com/bishopm/connexion",
+    "homepage": "https://github.com/bishopm/churchsite",
     "license": "MIT",
     "authors": [
         {
@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Bishopm\\Connexion\\": "src"
+            "Bishopm\\Churchsite\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "bishopm\\connexion\\": "tests"
+            "bishopm\\churchsite\\": "tests"
         }
     },
     "scripts": {
