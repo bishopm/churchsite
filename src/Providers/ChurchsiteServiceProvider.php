@@ -49,6 +49,5 @@ class ChurchsiteServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias("HTML", 'Collective\Html\HtmlFacade');
         $this->app['router']->aliasMiddleware('handlecors', 'Barryvdh\Cors\HandleCors');
         $this->app['router']->aliasMiddleware('jwt.auth', 'Tymon\JWTAuth\Middleware\GetUserFromToken');
-        $this->registerBindings();
     }
 }

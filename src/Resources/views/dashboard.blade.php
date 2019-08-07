@@ -1,4 +1,4 @@
-@extends('churchsite::templates.backend')
+@extends('adminlte::page')
 
 @section('title','Dashboard')
 
@@ -13,7 +13,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        @include('churchsite::shared.errors')
                         <div class="col-md-8">
                             <form id="searchform" action="#" method="get" class="">
                                 <div class="input-group">
@@ -27,11 +26,7 @@
                         </div>
                       <div class="col-md-4">
                           Logged in as: 
-                          @if (isset(Auth::user()->individual))
-                              <b>{{Auth::user()->individual->fullname}}</b>
-                          @else
-                              <b>{{Auth::user()->name}}</b>
-                          @endif
+
                       </div>
                   </div>
               </div>
@@ -40,23 +35,6 @@
                     <div id="searchdata" style="padding-top:15px; padding-bottom: 15px;">
                     </div>
                   </div>
-                  @if (count($actions))
-                  <div class="well col-md-4">
-                    <h2 style="margin-top: -7px">To do 
-                    @if (isset(Auth::user()->individual))
-                      <small>{{Auth::user()->individual->firstname}}</small>
-                      <a href="{{route('admin.actions.general.create')}}" class="btn btn-default">Add task</a>
-                    @endif
-                    </h2>
-                    <ul class="list-unstyled">
-                    @foreach ($actions as $action)
-                        @if ($action->project)
-                            <li><a role="button" id="{{$action->id}}" title="Click to mark task as complete" class="toggletask"><i class="fa-square-o fa"></i></a> {{$action->description}} ({{$action->project->description}})</li>
-                        @endif
-                    @endforeach
-                    </ul>
-                  </div>
-                  @endif
               </div>
           </div>
         </div>
@@ -65,36 +43,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript">
-    $.ajaxSetup({
-  	     headers: {
-  	      'X-CSRF-TOKEN': $('meta[name="token"]').attr('value')
-  	  }
-    });
-  	$(document).ready(function() {
-    	  $('.toggletask').on('click',function(){
-      	    $.ajax({
-      	      type : 'GET',
-      	      url : '{{url('/')}}/admin/actions/togglecompleted/' + this.id,
-      	    });
-      	    $(this).find('i').toggleClass('fa-square-o fa-check');
-    	  });
-    	  $(function() {
-    	      $("#q").focus();
-    	  });
-    	  $('#q').on('keyup',function(e){
-      	    if ($('#q').val().length>2){
-        	      $.ajax({
-          	          type : 'POST',
-          	          url : '{{route('admin.search')}}',
-          	          data : $('#searchform').serialize(),
-          	          success: function(e){
-            	            ttt=JSON.parse(e);
-            	            $('#searchdata').html(ttt);
-          	          }
-        	      });
-      	    }
-    	  });
-  	});
-</script>
+
 @endsection
