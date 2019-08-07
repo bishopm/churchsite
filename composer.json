@@ -1,0 +1,73 @@
+{
+    "name": "bishopm/churchsite",
+    "type": "library",
+    "description": "Laravel-based website builder for local churches using the ChurchNet API",
+    "keywords": [
+        "church",
+        "website"
+    ],
+    "homepage": "https://github.com/bishopm/connexion",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Bishop",
+            "email": "admin@church.net.za",
+            "homepage": "https://github.com/bishopm",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "illuminate/support": "5.*",
+        "jeroennoten/laravel-adminlte":"1.*",
+        "laravelcollective/html": "5.*",
+        "laravel/socialite": "3.*",
+        "laracasts/flash": "3.*",
+        "cviebrock/eloquent-sluggable":"^4.5",
+        "nwidart/laravel-menus": "4.*",
+        "league/oauth2-client": "^1.4",
+        "plank/laravel-mediable": "^2.3",
+        "cartalyst/tags": "8.*",
+        "beyondcode/laravel-comments": "1.*",
+        "jrean/laravel-user-verification": "7.*",
+        "felixkiss/uniquewith-validator": "3.*",
+        "lithiumdev/laravel-tagcloud": "1.*",
+        "guzzlehttp/guzzle": "6.*",
+        "laravelium/feed": "3.*",
+        "spatie/laravel-activitylog": "3.*",
+        "spatie/laravel-analytics": "3.*",
+        "spatie/laravel-permission": "2.*",
+        "tymon/jwt-auth": "1.*",
+        "barryvdh/laravel-cors": "0.11.*",
+        "consoletvs/charts": "6.*",
+        "laravel-notification-channels/webpush": "3.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "~6.0",        
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bishopm\\Connexion\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "bishopm\\connexion\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "post-install-cmd": [
+            "ln -sr storage/app/public public/storage"
+        ],
+        "post-package-update": [
+            "php artisan vendor:publish",
+            "php artisan migrate"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
