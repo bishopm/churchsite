@@ -3,31 +3,45 @@
 namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Bishopm\Churchsite\Models\Form;
 
 class ModelController extends Controller
 {
 
-    private $model;
-
-    public function __construct($model)
+    private function setup($model)
     {
-        $this->page = $model;
+        $this->eloquent = '\\Bishopm\\Churchsite\\Models\\' . ucfirst($model);
+        $this->data['model'] = $model;
+        $this->data['forms'] = Form::where('table',$model)->first();
     }
 
-    public function index()
+
+    public function index($model)
     {
-        $pages = $this->page->all();
-        return view('churchnet::pages.index', compact('pages'));
+        $this->setup($model);
+        $rows = $this->eloquent::all();
+        foreach (explode(',',$this->data['forms']['listview']) as $header) {
+            $this->data['headers'][] = $header;
+        }
+        foreach ($rows as $row) {
+            $dum = array();
+            foreach ($this->data['headers'] as $header) {
+                $dum[$header] = $row->$header;
+            }
+            $dum['id'] = $row->id;
+            $this->data['rows'][]=$dum;
+        }
+        return view('churchsite::models.index',$this->data);
     }
 
-    public function edit()
+    public function edit($model, $id)
     {
 
     }
 
-    public function create()
+    public function create($model)
     {
-
+        return view('churchsite::models.create',compact('model'));
     }
 
     public function show()

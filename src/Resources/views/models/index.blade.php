@@ -1,4 +1,4 @@
-@extends('churchsite::templates.backend')
+@extends('adminlte::page')
 
 @section('css')
     @parent    
@@ -6,35 +6,39 @@
 
 @section('content')
     <div class="container-fluid spark-screen">
-    @include('churchsite::shared.errors') 
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-md-6"><h4>Blog</h4></div>
-                            <div class="col-md-6"><a href="{{route('admin.blogs.create')}}" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Add a new post</a></div>
+                            <div class="col-md-6"><h4>{{ucfirst($model)}}</h4></div>
+                            <div class="col-md-6"><a href="{{route('models.create',$model)}}" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Add a new {{$model}}</a></div>
                         </div>
                     </div>
                     <div class="panel-body">
                         <table id="indexTable" class="table table-striped table-hover table-condensed table-responsive" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Date</th><th>Title</th><th>Author</th><th>Status</th>
+                                    @foreach ($headers as $header)
+                                        <th>{{ucfirst($header)}}</th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Date</th><th>Title</th><th>Author</th><th>Status</th>
+                                    @foreach ($headers as $header)
+                                        <th>{{ucfirst($header)}}</th>
+                                    @endforeach
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @forelse ($blogs as $blog)
+                                @forelse ($rows as $row)
                                     <tr>
-                                        <td><a href="{{route('admin.blogs.edit',$blog->id)}}">{{date("Y-m-d", strtotime($blog->created_at))}}</a></td>
-                                        <td><a href="{{route('admin.blogs.edit',$blog->id)}}">{{$blog->title}}</a></td>
-                                        <td><a href="{{route('admin.blogs.edit',$blog->id)}}">{{$blog->individual->firstname}} {{$blog->individual->surname}}</a></td>
-                                        <td><a href="{{route('admin.blogs.edit',$blog->id)}}">{{$blog->status}}</a></td>
+                                        @foreach ($row as $ndx=>$col)
+                                            @if ($ndx <> 'id')
+                                                <td><a href="{{route('models.edit',array($model,$row['id']))}}">{{$col}}</a></td>
+                                            @endif
+                                        @endforeach
                                     </tr>
                                 @empty
                                     <tr><td>No posts have been added yet</td></tr>
@@ -49,12 +53,4 @@
 @endsection
 
 @section('js')
-@parent
-<script language="javascript">
-$(document).ready(function() {
-        $('#indexTable').DataTable( {
-            "order": [[ 0, "desc" ]]
-        } );
-    } );
-</script>
 @endsection
