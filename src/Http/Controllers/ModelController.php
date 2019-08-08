@@ -4,6 +4,7 @@ namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Bishopm\Churchsite\Models\Form;
+use Illuminate\Http\Request;
 
 class ModelController extends Controller
 {
@@ -14,7 +15,6 @@ class ModelController extends Controller
         $this->data['model'] = $model;
         $this->data['forms'] = Form::where('table',$model)->first();
     }
-
 
     public function index($model)
     {
@@ -36,12 +36,22 @@ class ModelController extends Controller
 
     public function edit($model, $id)
     {
-
+        $this->setup($model);
+        $item = $this->eloquent::find($id);
+        foreach (explode(',',$this->data['forms']['editview']) as $field) {
+            $this->data['fields'][$field] = $item[$field];
+        }
+        $this->data['fields']['id'] = $item['id'];
+        return view('churchsite::models.edit',$this->data);
     }
 
     public function create($model)
     {
-        return view('churchsite::models.create',compact('model'));
+        $this->setup($model);
+        foreach (explode(',',$this->data['forms']['editview']) as $field) {
+            $this->data['fields'][] = $field;
+        }
+        return view('churchsite::models.create',$this->data);
     }
 
     public function show()
@@ -54,9 +64,9 @@ class ModelController extends Controller
 
     }
     
-    public function update()
+    public function update(Request $request)
     {
-
+        dd($request->all());
     }
 
     public function destroy()

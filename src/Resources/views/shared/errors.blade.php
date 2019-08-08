@@ -1,4 +1,4 @@
-@if(count($errors))
+@if(isset($errors) && count($errors))
     <div class="alert alert-danger"><h4>Error!</h4>
     	<div class="row">
     		<ul>

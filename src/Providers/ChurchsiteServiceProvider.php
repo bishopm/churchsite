@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Contracts\Events\Dispatcher;
+use Form;
 
 class ChurchsiteServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,16 @@ class ChurchsiteServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../Assets' => public_path('vendor/bishopm')], 'public');
         config(['auth.providers.users.model'=>'Bishopm\Churchsite\Models\User']);
         config(['queue.default'=>'database']);
-        // Form::component('bsText', 'churchsite::components.text', ['name', 'label' => '', 'placeholder' => '', 'value' => null, 'attributes' => []]);
+        Form::component('bsText', 'churchsite::components.text', ['name', 'label' => '', 'placeholder' => '', 'value' => null, 'attributes' => []]);
+        Form::component('bsPassword', 'churchsite::components.password', ['name', 'label' => '', 'placeholder' => '', 'value' => null, 'attributes' => []]);
+        Form::component('bsTextarea', 'churchsite::components.textarea', ['name', 'label' => '', 'placeholder' => '', 'value' => null, 'attributes' => []]);
+        Form::component('bsThumbnail', 'churchsite::components.thumbnail', ['source', 'width' => '100', 'label' => '']);
+        Form::component('bsImgpreview', 'churchsite::components.imgpreview', ['source', 'width' => '200', 'label' => '']);
+        Form::component('bsHidden', 'churchsite::components.hidden', ['name', 'value' => null]);
+        Form::component('bsSelect', 'churchsite::components.select', ['name', 'label' => '', 'options' => [], 'value' => null, 'attributes' => []]);
+        Form::component('pgHeader', 'churchsite::components.pgHeader', ['pgtitle', 'prevtitle', 'prevroute']);
+        Form::component('pgButtons', 'churchsite::components.pgButtons', ['actionLabel', 'cancelRoute']);
+        Form::component('bsFile', 'churchsite::components.file', ['name', 'attributes' => []]);
         config(['jwt.ttl' => 525600]);
         config(['jwt.refresh_ttl' => 525600]);
         config(['auth.providers.users.model'=>'Bishopm\Churchsite\Models\User']);

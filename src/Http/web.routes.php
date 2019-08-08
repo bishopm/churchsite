@@ -15,7 +15,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('logout', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Auth\LoginController@logout','as'=>'logout']);
 });
 
-Route::get('admin', ['uses'=>'Bishopm\Churchsite\Http\Controllers\HomeController@admin','as'=>'admin']);
+Route::get('admin', ['uses'=>'Bishopm\Churchsite\Http\Controllers\HomeController@admin','as'=>'dashboard']);
 Route::get('admin/models/{model}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@index','as'=>'models.index']);
 Route::get('admin/models/{model}/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@create','as'=>'models.create']);
 Route::get('admin/models/{model}/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@edit','as'=>'models.edit']);
+Route::post('admin/models/{model}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@store','as'=>'models.store']);
+Route::put('admin/models/{model}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@update','as'=>'models.update']);
