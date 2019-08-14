@@ -41,7 +41,11 @@ class ChurchsiteServiceProvider extends ServiceProvider
         config(['jwt.ttl' => 525600]);
         config(['jwt.refresh_ttl' => 525600]);
         config(['auth.providers.users.model'=>'Bishopm\Churchsite\Models\User']);
-        config(['jwt.user' => 'Bishopm\Churchsite\Models\User']);
+        config(['adminlte.title' => 'ChurchNet']);
+        config(['adminlte.logo' => '<b>Church</b>Net']);
+        config(['adminlte.logo_mini' => '<b>C</b>N']);
+        config(['adminlte.skin' => 'blue']);
+        config(['adminlte.dashboard_url' => 'admin']);
     }
 
     /**

@@ -20,6 +20,7 @@
                             <input class="form-control" data-slug="source" placeholder="{{ucfirst($field)}}" name="{{$field}}" id="{{$field}}" type="text">
                         </div>
                     @endforeach
+                    <input name="_model" id="_model" type="hidden" value="{{$model}}">
                 </div>
                 <div class="box-footer">
                     {{Form::pgButtons('Create',route('models.index',$model)) }}

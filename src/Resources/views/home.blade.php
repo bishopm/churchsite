@@ -9,11 +9,13 @@
 @section('content')
 <div class="container">
   <div class="row">
-    @foreach ($blocks as $block)
-      <div class="col-md-{{$block->width}} text-center" style="z-index: 1;">
-        @include('vendor/bishopm/blocks/' . $block->filename)
-      </div>
-    @endforeach
+    @if (isset($blocks))
+      @foreach ($blocks as $block)
+        <div class="col-md-{{$block->width}} text-center" style="z-index: 1;">
+          @include('vendor/bishopm/blocks/' . $block->filename)
+        </div>
+      @endforeach
+    @endif
   </div>
 </div>
 @endsection

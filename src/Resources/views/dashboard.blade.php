@@ -14,15 +14,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-8">
-                            <form id="searchform" action="#" method="get" class="">
-                                <div class="input-group">
-                                    <input type="text" id="q" name="q" autocomplete="off" class="form-control" placeholder="Start typing to find people...">
-                                    <span class="input-group-btn">
-                                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
+                            Welcome
                         </div>
                       <div class="col-md-4">
                           Logged in as: 

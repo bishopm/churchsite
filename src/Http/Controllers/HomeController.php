@@ -11,4 +11,9 @@ class HomeController extends Controller
     {
         return view('churchsite::dashboard');
     }
+
+    public function home()
+    {
+        return view('churchsite::home');
+    }
 }

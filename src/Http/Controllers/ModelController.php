@@ -66,7 +66,9 @@ class ModelController extends Controller
     
     public function update(Request $request)
     {
-        dd($request->all());
+        $this->setup($request->_model);
+        $item = $this->eloquent::find($request->id);
+        $item->update($request->except('_model','_token','_method'));
     }
 
     public function destroy()
