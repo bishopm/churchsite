@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('churchsite::page')
 
 @section('css')
 @stop

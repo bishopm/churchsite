@@ -46,6 +46,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
         config(['adminlte.logo_mini' => '<b>C</b>N']);
         config(['adminlte.skin' => 'blue']);
         config(['adminlte.dashboard_url' => 'admin']);
+        view()->composer('churchsite::page', \JeroenNoten\LaravelAdminLte\Http\ViewComposers\AdminLteComposer::class);
     }
 
     /**
