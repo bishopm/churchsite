@@ -41,7 +41,7 @@
                                         @endforeach
                                     </tr>
                                 @empty
-                                    <tr><td>No posts have been added yet</td></tr>
+                                    <tr><td>No records have been added yet</td></tr>
                                 @endforelse
                             </tbody>
                         </table>

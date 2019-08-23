@@ -15,6 +15,7 @@ class ModelController extends Controller
         $this->eloquent = '\\Bishopm\\Churchsite\\Models\\' . ucfirst(str_singular($model));
         $this->data['model'] = $model;
         $this->data['forms'] = Form::where('table',$model)->first();
+        $this->data['columns'] = json_decode($this->data['forms']->allfields);
     }
 
     public function index($model)
@@ -42,7 +43,7 @@ class ModelController extends Controller
         $item = $this->eloquent::find($id);
         foreach (explode(',',$this->data['forms']['editview']) as $field) {
             $this->data['fields'][$field]['value'] = $item[$field];
-            $this->data['fields'][$field]['type'] = DB::Connection()->getDoctrineColumn($model, $field)->getType()->getName();
+            $this->data['fields'][$field]['type'] = $this->data['columns']->$field;
         }
         $this->data['fields']['id'] = $item['id'];
         return view('churchsite::models.edit',$this->data);
