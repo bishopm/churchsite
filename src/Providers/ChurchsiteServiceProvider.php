@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Contracts\Events\Dispatcher;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use Form;
 
 class ChurchsiteServiceProvider extends ServiceProvider
@@ -45,8 +46,25 @@ class ChurchsiteServiceProvider extends ServiceProvider
         config(['adminlte.logo' => '<b>Church</b>Net']);
         config(['adminlte.logo_mini' => '<b>C</b>N']);
         config(['adminlte.skin' => 'blue']);
+        config(['adminlte.menu' => []]);
         config(['adminlte.dashboard_url' => 'admin']);
-        view()->composer('churchsite::page', \JeroenNoten\LaravelAdminLte\Http\ViewComposers\AdminLteComposer::class);
+        $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
+            $event->menu->menu=array();
+            $event->menu->add('WEBSITE');
+            $event->menu->add(
+                [
+                    'text' => 'Blog',
+                    'url' => 'admin/models/blogs',
+                    'icon' => 'pencil-square-o'
+                ],
+                [
+                    'text' => 'Sermons',
+                    'url' => 'admin/models/series',
+                    'icon' => 'microphone'
+                ]
+            );
+        });
+        view()->composer('churchsite::page', \Bishopm\Churchsite\Http\ViewComposers\BackendComposer::class);
     }
 
     /**

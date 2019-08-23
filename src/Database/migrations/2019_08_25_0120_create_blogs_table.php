@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdminmenuitemsTable extends Migration
+class CreateBlogsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,14 +12,13 @@ class CreateAdminmenuitemsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('adminmenuitems', function(Blueprint $table) {
+		Schema::create('blogs', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('label');
-            $table->string('url');
-			$table->string('icon');
-			$table->integer('order');
-			$table->integer('parent');
+            $table->string('title');
+            $table->string('slug');
+            $table->text('body');
+            $table->integer('author_id');
             $table->timestamps();
 		});
 	}
@@ -31,6 +30,6 @@ class CreateAdminmenuitemsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('adminmenuitems');
+		Schema::drop('blogs');
 	}
 }

@@ -18,10 +18,14 @@
                         @if ($key <> 'id')
                             <div class="form-group">
                                 <label for="name">{{ucfirst($key)}}</label>
-                                <input class="form-control" data-slug="source" placeholder="{{ucfirst($key)}}" name="{{$key}}" id="{{$key}}" type="text" value="{{$val}}">
+                                @if ($val['type'] == 'string')
+                                    <input class="form-control" data-slug="source" placeholder="{{ucfirst($key)}}" name="{{$key}}" id="{{$key}}" type="text" value="{{$val['value']}}">
+                                @elseif ($val['type'] == 'text')
+                                    <textarea class="form-control" placeholder="{{ucfirst($key)}}" name="{{$key}}">{{$val['value']}}</textarea>
+                                @endif
                             </div>
                         @else
-                            <input name="{{$key}}" id="{{$key}}" type="hidden" value="{{$val}}">
+                            <input name="{{$key}}" id="{{$key}}" type="hidden" value="{{$val['value']}}">
                             <input name="_model" id="_model" type="hidden" value="{{$model}}">
                         @endif
                     @endforeach

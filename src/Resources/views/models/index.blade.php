@@ -12,7 +12,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-md-6"><h4>{{ucfirst($model)}}</h4></div>
-                            <div class="col-md-6"><a href="{{route('models.create',$model)}}" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Add a new {{$model}}</a></div>
+                            <div class="col-md-6"><a href="{{route('models.create',$model)}}" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Add a new {{str_singular($model)}}</a></div>
                         </div>
                     </div>
                     <div class="panel-body">

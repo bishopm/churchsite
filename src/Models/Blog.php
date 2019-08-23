@@ -4,7 +4,7 @@ namespace Bishopm\Churchsite\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Adminmenuitem extends Model
+class Blog extends Model
 {
     protected $guarded = array('id');
 }

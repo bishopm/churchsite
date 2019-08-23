@@ -5,13 +5,14 @@ namespace Bishopm\Churchsite\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Bishopm\Churchsite\Models\Form;
 use Illuminate\Http\Request;
+use DB;
 
 class ModelController extends Controller
 {
 
     private function setup($model)
     {
-        $this->eloquent = '\\Bishopm\\Churchsite\\Models\\' . ucfirst($model);
+        $this->eloquent = '\\Bishopm\\Churchsite\\Models\\' . ucfirst(str_singular($model));
         $this->data['model'] = $model;
         $this->data['forms'] = Form::where('table',$model)->first();
     }
@@ -23,6 +24,7 @@ class ModelController extends Controller
         foreach (explode(',',$this->data['forms']['listview']) as $header) {
             $this->data['headers'][] = $header;
         }
+        $this->data['rows']=array();
         foreach ($rows as $row) {
             $dum = array();
             foreach ($this->data['headers'] as $header) {
@@ -39,7 +41,8 @@ class ModelController extends Controller
         $this->setup($model);
         $item = $this->eloquent::find($id);
         foreach (explode(',',$this->data['forms']['editview']) as $field) {
-            $this->data['fields'][$field] = $item[$field];
+            $this->data['fields'][$field]['value'] = $item[$field];
+            $this->data['fields'][$field]['type'] = DB::Connection()->getDoctrineColumn($model, $field)->getType()->getName();
         }
         $this->data['fields']['id'] = $item['id'];
         return view('churchsite::models.edit',$this->data);
@@ -59,9 +62,10 @@ class ModelController extends Controller
 
     }
 
-    public function store()
+    public function store(Request $request)
     {
-
+        $this->setup($request->_model);
+        $item = $this->eloquent::create($request->except('_model','_token','_method'));
     }
     
     public function update(Request $request)
@@ -69,6 +73,7 @@ class ModelController extends Controller
         $this->setup($request->_model);
         $item = $this->eloquent::find($request->id);
         $item->update($request->except('_model','_token','_method'));
+        return $this->index($request->_model);
     }
 
     public function destroy()

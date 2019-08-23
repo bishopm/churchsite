@@ -93,7 +93,6 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    Need a database table for menu headers, links etc
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
                 </ul>
                 <!-- /.sidebar-menu -->
