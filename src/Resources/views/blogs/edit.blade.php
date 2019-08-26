@@ -22,6 +22,13 @@
                                     <input class="form-control" data-slug="source" placeholder="{{ucfirst($key)}}" name="{{$key}}" id="{{$key}}" type="text" value="{{$val['value']}}">
                                 @elseif ($val['type'] == 'text')
                                     <textarea class="form-control" placeholder="{{ucfirst($key)}}" name="{{$key}}">{{$val['value']}}</textarea>
+                                @elseif (is_array($val['type']))
+                                    <select class="form-control" name="{{$key}}">
+                                        <option></option>
+                                        @foreach ($val['type'] as $opt)
+                                            <option>{{$opt}}</option>
+                                        @endforeach
+                                    </select>
                                 @endif
                             </div>
                         @else

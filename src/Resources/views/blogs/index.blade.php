@@ -33,7 +33,7 @@
                                         <td><a href="{{route('blogs.edit',$blog['id'])}}">{{$blog->title}}</a></td>
                                     </tr>
                                 @empty
-                                    <tr><td>No posts have been added yet</td></tr>
+                                    <tr><td>No records have been added yet</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
