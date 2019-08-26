@@ -10,17 +10,18 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('password/reset/{token}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Auth\ResetPasswordController@showResetForm','as'=>'showResetForm']);
 });
 
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => ['web','auth']], function () {
     // Logout
     Route::post('logout', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Auth\LoginController@logout','as'=>'logout']);
 
-    // Backend routes
     Route::get('admin', ['uses'=>'Bishopm\Churchsite\Http\Controllers\HomeController@admin','as'=>'dashboard']);
-    Route::get('admin/models/{model}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@index','as'=>'models.index']);
-    Route::get('admin/models/{model}/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@create','as'=>'models.create']);
-    Route::get('admin/models/{model}/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@edit','as'=>'models.edit']);
-    Route::post('admin/models/{model}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@store','as'=>'models.store']);
-    Route::put('admin/models/{model}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ModelController@update','as'=>'models.update']);
+
+    // Blogs
+    Route::get('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@index','as'=>'blogs.index']);
+    Route::get('admin/blogs/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@create','as'=>'blogs.create']);
+    Route::get('admin/blogs/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@edit','as'=>'blogs.edit']);
+    Route::post('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@store','as'=>'blogs.store']);
+    Route::put('admin/blogs/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@update','as'=>'blogs.update']);
 
     Route::get('/', ['uses'=>'Bishopm\Churchsite\Http\Controllers\HomeController@home','as'=>'home']); 
 });

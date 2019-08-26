@@ -17,7 +17,7 @@
                             Welcome
                         </div>
                       <div class="col-md-4">
-                          Logged in as: 
+                          Logged in as: {{Auth::user()}}
 
                       </div>
                   </div>

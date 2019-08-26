@@ -54,7 +54,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
             $event->menu->add(
                 [
                     'text' => 'Blog',
-                    'url' => 'admin/models/blogs',
+                    'url' => 'admin/blogs',
                     'icon' => 'pencil-square-o'
                 ],
                 [
