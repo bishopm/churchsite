@@ -14,10 +14,10 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-8">
-                            Welcome
+                            Welcome, {{Auth::user()->name}}
                         </div>
                       <div class="col-md-4">
-                          Logged in as: {{Auth::user()}}
+                          Sidebar
                       </div>
                   </div>
               </div>

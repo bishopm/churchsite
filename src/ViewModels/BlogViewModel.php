@@ -3,9 +3,11 @@
 namespace Bishopm\Churchsite\ViewModels;
 
 use Spatie\ViewModels\ViewModel;
+use Spatie\Tags\Tag;
 use Bishopm\Churchsite\Http\Controllers\BlogsController;
 use Bishopm\Churchsite\Models\User;
 use Bishopm\Churchsite\Models\Blog;
+use Illuminate\Database\Eloquent\Collection;
 use DB;
 
 class BlogViewModel extends ViewModel
@@ -27,12 +29,6 @@ class BlogViewModel extends ViewModel
     
     public function tags(): Collection
     {
-        return Tag::canBeUsedBy($this->user)->get();
-        return \DB::table('taggables')
-   ->distinct()
-   ->select('tag_id')
-   ->where('taggable_type', YourModel::class)
-   ->get()
-   ->pluck('tag_id');
+        return Tag::getWithType('Blog');
     }
 }

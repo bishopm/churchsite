@@ -18,6 +18,14 @@
                         <label for="title">Title</label>
                         <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text">
                     </div>
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <select multiple class="form-control" name="tags" id="tags">
+                            @foreach ($tags as $tag)
+                                <option>{{$tag->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="box-footer">
                     {{Form::pgButtons('Create',route('blogs.index'))}}
