@@ -6,6 +6,7 @@ use Spatie\ViewModels\ViewModel;
 use Bishopm\Churchsite\Http\Controllers\BlogsController;
 use Bishopm\Churchsite\Models\User;
 use Bishopm\Churchsite\Models\Blog;
+use DB;
 
 class BlogViewModel extends ViewModel
 {
@@ -24,8 +25,14 @@ class BlogViewModel extends ViewModel
         return $this->blog ?? new Blog();
     }
     
-    /*public function authors(): Collection
+    public function tags(): Collection
     {
-        return Category::canBeUsedBy($this->user)->get();
-    }*/
+        return Tag::canBeUsedBy($this->user)->get();
+        return \DB::table('taggables')
+   ->distinct()
+   ->select('tag_id')
+   ->where('taggable_type', YourModel::class)
+   ->get()
+   ->pluck('tag_id');
+    }
 }
