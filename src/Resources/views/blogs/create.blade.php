@@ -37,4 +37,7 @@
 @stop
 
 @section('js')
+$('.tags').select2({
+  placeholder: 'Select an option'
+});
 @stop
