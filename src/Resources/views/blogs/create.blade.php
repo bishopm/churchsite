@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tags">Tags</label>
-                        <select multiple class="form-control" name="tags" id="tags">
+                        <select multiple="multiple" class="select2 form-control" name="tags[]">
                             @foreach ($tags as $tag)
                                 <option>{{$tag->name}}</option>
                             @endforeach
@@ -37,7 +37,11 @@
 @stop
 
 @section('js')
-$('.tags').select2({
-  placeholder: 'Select an option'
-});
+<script>
+    $('.select2').select2({
+    placeholder: 'Select an option',
+    tags: true,
+    width: '100%'
+    });
+</script>
 @stop
