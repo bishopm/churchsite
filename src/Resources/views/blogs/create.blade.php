@@ -19,12 +19,25 @@
                         <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="tags">Tags</label>
-                        <select multiple="multiple" class="select2 form-control" name="tags[]">
-                            @foreach ($tags as $tag)
-                                <option>{{$tag->name}}</option>
+                        <label for="tags">Author</label>
+                        <select class="authortags form-control" name="author">
+                            <option></option>
+                            @foreach ($bloggers as $author)
+                                <option>{{$author->name}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Subject</label>
+                        <select multiple="multiple" class="subjecttags form-control" name="tags[]">
+                            @foreach ($subjects as $subject)
+                                <option>{{$subject->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Body</label>
+                        <textarea id="summernote" name="body"></textarea>
                     </div>
                 </div>
                 <div class="box-footer">
@@ -37,11 +50,21 @@
 @stop
 
 @section('js')
-<script>
-    $('.select2').select2({
-    placeholder: 'Select an option',
-    tags: true,
-    width: '100%'
-    });
-</script>
+    <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
+    <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
+    <script>
+        $('.authortags').select2({
+            placeholder: 'Select or add author',
+            tags: true,
+            width: '100%'
+        });
+        $('.subjecttags').select2({
+            placeholder: 'Select one or more subject tags',
+            tags: true,
+            width: '100%'
+        });
+        $(document).ready(function() {
+            $('#summernote').summernote({height: 200});
+        });
+    </script>
 @stop

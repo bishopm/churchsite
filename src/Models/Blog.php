@@ -7,5 +7,7 @@ use Spatie\Tags\HasTags;
 
 class Blog extends Model
 {
+    use HasTags;
+    
     protected $guarded = array('id');
 }

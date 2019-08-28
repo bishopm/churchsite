@@ -27,8 +27,41 @@ class BlogViewModel extends ViewModel
         return $this->blog ?? new Blog();
     }
     
-    public function tags(): Collection
+    public function subjecttags(): Array
+    {
+        if ($this->blog) {
+            $tags = $this->blog->tagsWithType('Blog');
+            $stags = array();
+            foreach ($tags as $tag) {
+                $stags[]=$tag->name;
+            }
+            return $stags;
+        } else {
+            return [];
+        }
+    }
+
+    public function author(): String
+    {
+        if ($this->blog) {
+            $authorarray = $this->blog->tagsWithType('Blogger')->first();
+            if ($authorarray) {
+                return $authorarray->name;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    public function subjects(): Collection
     {
         return Tag::getWithType('Blog');
+    }
+
+    public function bloggers(): Collection
+    {
+        return Tag::getWithType('Blogger');
     }
 }
