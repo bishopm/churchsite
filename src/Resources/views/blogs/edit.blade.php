@@ -44,6 +44,11 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="image">Image</label>
+                        <a class="btn btn-primary" href="#">Upload image</a> <a class="btn btn-primary" href="#">Search Upsplash</a>
+                        <input class="form-control" data-slug="image" placeholder="Image" name="image" id="image" type="text">
+                    </div>
+                    <div class="form-group">
                         <label for="body">Body</label>
                         <textarea id="summernote" name="body">{{$blog->body}}</textarea>
                     </div>
