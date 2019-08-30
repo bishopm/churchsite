@@ -10,7 +10,7 @@
 @section('content')
     @include('churchsite::shared.errors')
     {!! Form::open(['route' => 'blogs.store', 'method' => 'post','files'=>'true']) !!}
-    <div class="row">
+    <div class="row" id="unsplash">
         <div class="col-md-12">
             <div class="box box-primary"> 
                 <div class="box-body">
@@ -39,12 +39,14 @@
                         <label for="image">Image</label>
                         <div>
                             <input class="form-control" name="image" id="image" type="file">
+                            <div :v-html="pics"></div>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal">Search unSplash</button>
-                            <div class="modal fade bd-modal" id="unsplash" tabindex="-1" role="dialog" aria-labelledby="unSplash Modal" aria-hidden="true">
+                            <div class="modal fade bd-modal" tabindex="-1" role="dialog" aria-labelledby="unSplash Modal" aria-hidden="true">
                                 <div class="modal-dialog border" style="width:95%;height=95%;">
                                     <div class="modal-content" style="width:100%;height=100%;padding-top:1%;">
                                         <h3 class="text-center">Search for unSplash images</h3>
-                                        <input @blur="searchme" class="form-control" placeholder="search for image" id="search">
+                                        <input @blur="searchme" class="form-control" placeholder="search for image" id="search" v-model="search">
+                                        <img v-for="pic in pics" :src="pic.urls.thumb">
                                     </div>
                                 </div>
                             </div>
@@ -67,23 +69,29 @@
 @section('js')
     <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
     <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        $( document ).ready(function() {
-            $('#search').on('change', function () {
-                $.ajax({ 
-                    type: "GET", 
-                    url: "https://api.unsplash.com/search/photos?query=church",
-                    success: function (pics) {
-                        console.log(pics)
-                    },
-                    error : function(error) {
+        var app=new Vue({
+            el: '#unsplash',
+            data: {
+                pics: [],
+                search: 'church'
+            },
+            methods: {
+                searchme(){
+                    axios.get('https://api.unsplash.com/search/photos?page=1&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
+                    .then(response => {
+                        this.pics = response.data.results;
+                        console.log(this.pics);
+                    })
+                    .catch(function (error) {
                         console.log(error);
-                    }
-                });    
-            });
+                    });
+                }
+            }
         });
     </script>
-
     <script>
         $('.authortags').select2({
             placeholder: 'Select or add author',
