@@ -38,15 +38,31 @@
                     <div class="form-group">
                         <label for="image">Image</label>
                         <div>
-                            <input class="form-control" name="image" id="image" type="file">
-                            <div :v-html="pics"></div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal">Search unSplash</button>
-                            <div class="modal fade bd-modal" tabindex="-1" role="dialog" aria-labelledby="unSplash Modal" aria-hidden="true">
-                                <div class="modal-dialog border" style="width:95%;height=95%;">
-                                    <div class="modal-content" style="width:100%;height=100%;padding-top:1%;">
-                                        <h3 class="text-center">Search for unSplash images</h3>
+                            <div v-if="chosenpic.urls">
+                                <img :src="chosenpic.urls.thumb">
+                                <button type="button" @click="clearme" class="close">
+                                    <span aria-hidden="true">&times; Clear</span>
+                                </button>
+                            </div>
+                            <button v-else type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal">Search unSplash</button>
+                            <input name="image" id="image" type="hidden" v-model="imageJson">
+                            <div id="unsplashModal" class="modal fade bd-modal" tabindex="-1" role="dialog" aria-labelledby="unSplash Modal" aria-hidden="true">
+                                <div class="modal-dialog" style="width:95%;height=95%;">
+                                    <div class="modal-content" style="width:100%;height=100%;">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h3 class="text-center">Search for unSplash images</h3>
+                                        </div>
                                         <input @blur="searchme" class="form-control" placeholder="search for image" id="search" v-model="search">
-                                        <img v-for="pic in pics" :src="pic.urls.thumb">
+                                        <div class="container">
+                                           <div class="row">
+                                                <div v-for="pic in pics" class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-1">
+                                                    <img @click="chooseme(pic)" class="img-thumbnail img-fluid" :src="pic.urls.thumb">
+                                                </div>
+                                           </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -76,18 +92,28 @@
             el: '#unsplash',
             data: {
                 pics: [],
-                search: 'church'
+                search: 'church',
+                imageJson: '',
+                chosenpic: {}
             },
             methods: {
                 searchme(){
-                    axios.get('https://api.unsplash.com/search/photos?page=1&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
+                    axios.get('https://api.unsplash.com/search/photos?per_page=30&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
                     .then(response => {
                         this.pics = response.data.results;
-                        console.log(this.pics);
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
+                },
+                chooseme(pic){
+                    this.chosenpic = pic;
+                    this.imageJson = JSON.stringify(pic);
+                    $('#unsplashModal').modal('hide');
+                },
+                clearme() {
+                    this.chosenpic = {};
+                    this.imageJson = '';
                 }
             }
         });
