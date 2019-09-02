@@ -28,6 +28,12 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="publicationdate">Publication date</label>
+                        <div>
+                            <input type="text" class="form-control datetimepicker-input" id="datetimepicker" data-toggle="datetimepicker" data-target="#datetimepicker" name="publicationdate"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="tags">Subject</label>
                         <select multiple="multiple" class="subjecttags form-control" name="tags[]">
                             @foreach ($subjects as $subject)
@@ -38,14 +44,15 @@
                     <div class="form-group">
                         <label for="image">Image</label>
                         <div>
-                            <div v-if="chosenpic.urls">
-                                <img :src="chosenpic.urls.thumb">
-                                <button type="button" @click="clearme" class="close">
-                                    <span aria-hidden="true">&times; Clear</span>
-                                </button>
+                            <div v-if="chosenpic.thumbnail">
+                                <img :src="chosenpic.thumbnail">
+                                <a href="#" @click="clearme" class="btn btn-danger">&times; Remove image</a>
                             </div>
                             <button v-else type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal">Search unSplash</button>
-                            <input name="image" id="image" type="hidden" v-model="imageJson">
+                            <input name="photographer" id="photographer" type="hidden" v-model="chosenpic.credit">
+                            <input name="portfolio" id="portfolio" type="hidden" v-model="chosenpic.crediturl">
+                            <input name="image" id="image" type="hidden" v-model="chosenpic.regular">
+                            <input name="thumbnail" id="thumbnail" type="hidden" v-model="chosenpic.thumb">
                             <div id="unsplashModal" class="modal fade bd-modal" tabindex="-1" role="dialog" aria-labelledby="unSplash Modal" aria-hidden="true">
                                 <div class="modal-dialog" style="width:95%;height=95%;">
                                     <div class="modal-content" style="width:100%;height=100%;">
@@ -84,6 +91,9 @@
 
 @section('js')
     <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
+    <script src="{{asset('vendor/bishopm/js/moment.min.js')}}"></script>
+    <script src="{{asset('vendor/bishopm/js/datetimepicker.js')}}"></script>
+    <script src="{{asset('vendor/bishopm/css/datetimepicker.css')}}"></script>
     <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -93,12 +103,16 @@
             data: {
                 pics: [],
                 search: 'church',
-                imageJson: '',
-                chosenpic: {}
+                chosenpic: {
+                    photographer: '',
+                    portfolio: '',
+                    image: '',
+                    thumbnail: ''
+                }
             },
             methods: {
                 searchme(){
-                    axios.get('https://api.unsplash.com/search/photos?per_page=30&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
+                    axios.get('https://api.unsplash.com/search/photos?per_page=30&orientation=landscape&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
                     .then(response => {
                         this.pics = response.data.results;
                     })
@@ -107,8 +121,10 @@
                     });
                 },
                 chooseme(pic){
-                    this.chosenpic = pic;
-                    this.imageJson = JSON.stringify(pic);
+                    this.chosenpic.photographer = pic.user.name;
+                    this.chosenpic.portfolio = pic.user.links.portfolio;
+                    this.chosenpic.image = pic.urls.regular;
+                    this.chosenpic.thumbnail = pic.urls.thumb;
                     $('#unsplashModal').modal('hide');
                 },
                 clearme() {
@@ -119,6 +135,9 @@
         });
     </script>
     <script>
+        $('#datetimepicker').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
         $('.authortags').select2({
             placeholder: 'Select or add author',
             tags: true,

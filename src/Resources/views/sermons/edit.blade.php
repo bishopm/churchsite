@@ -128,7 +128,7 @@
             },
             methods: {
                 searchme(){
-                    axios.get('https://api.unsplash.com/search/photos?per_page=50&orientation=landscape&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
+                    axios.get('https://api.unsplash.com/search/photos?per_page=50&client_id={{env('UNSPLASH_ACCESS_KEY')}}&query=' + this.search)
                     .then(response => {
                         this.pics = response.data.results;
                     })

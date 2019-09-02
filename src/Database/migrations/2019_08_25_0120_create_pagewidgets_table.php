@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSeriesTable extends Migration
+class CreatePagewidgetsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,14 +12,12 @@ class CreateSeriesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('series', function(Blueprint $table) {
+		Schema::create('pagewidgets', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('title');
-            $table->string('slug');
-            $table->text('description');
-			$table->string('image');
-			$table->date('startdate');
+            $table->string('widget');
+			$table->integer('page_id');
+			$table->integer('order');
             $table->timestamps();
 		});
 	}
@@ -31,6 +29,6 @@ class CreateSeriesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('series');
+		Schema::drop('pagewidgets');
 	}
 }

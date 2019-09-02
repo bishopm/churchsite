@@ -4,10 +4,12 @@ namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Bishopm\Churchsite\Models\Series;
+use Bishopm\Churchsite\Models\Sermon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use DB;
 
-class SeriessController extends Controller
+class SeriesController extends Controller
 {
 
     public function index()
@@ -22,21 +24,35 @@ class SeriessController extends Controller
         return view('churchsite::series.edit',compact('series'));
     }
 
-    public function create($model)
+    public function show($id)
+    {
+        $series = Series::with('sermons')->find($id);
+        return view('churchsite::series.show',compact('series'));
+    }
+
+    public function create()
     {
         return view('churchsite::series.create');
     }
 
     public function store(Request $request)
     {
-        return Series::create($request->except('_token','_method'));
+        $file = $request->file('seriesimage');
+        $filename = time() . "." . $file->getClientOriginalExtension();
+        $request->request->add(['image' => $filename]);
+        $file->move(base_path() . '/storage/sermons/',$filename);
+        $request->request->add(['slug' => Str::slug($request->title, '-')]);
+        $series = Series::create($request->except('_token','_method','seriesimage'));
+        return redirect()->route('series.show',$series->id)
+            ->withSuccess('Series created');
     }
     
     public function update(Request $request)
     {
         $series = Series::find($request->id);
         $series->update($request->except('_token','_method'));
-        return $series;
+        return redirect()->route('series.index')
+            ->withSuccess('Series updated');
     }
 
     public function destroy()

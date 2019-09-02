@@ -50,7 +50,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
         config(['adminlte.dashboard_url' => 'admin']);
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
             $event->menu->menu=array();
-            $event->menu->add('WEBSITE');
+            $event->menu->add('WEBSITE CONTENT');
             $event->menu->add(
                 [
                     'text' => 'Blog',
@@ -59,11 +59,18 @@ class ChurchsiteServiceProvider extends ServiceProvider
                 ],
                 [
                     'text' => 'Sermons',
-                    'url' => 'admin/models/series',
+                    'url' => 'admin/sermons',
                     'icon' => 'microphone'
+                ],
+                [
+                    'text' => 'View website',
+                    'url' => '/',
+                    'icon' => 'globe'
                 ]
             );
         });
+        view()->composer('churchsite::widgets.latest_sermon', \Bishopm\Churchsite\Http\ViewComposers\LatestsermonComposer::class);
+        view()->composer('churchsite::widgets.latest_blogs', \Bishopm\Churchsite\Http\ViewComposers\LatestblogsComposer::class);
         view()->composer('churchsite::page', \Bishopm\Churchsite\Http\ViewComposers\BackendComposer::class);
     }
 
