@@ -5,9 +5,11 @@
 
 @section('content')
     <div class="row">
-        @foreach ($page['pagewidgets'] as $widget)
-            @include('churchsite::widgets.' . $widget['widget'])
-        @endforeach
+        @if (isset($page['pagewidgets']))
+            @foreach ($page['pagewidgets'] as $widget)
+                @include('churchsite::widgets.' . $widget['widget'])
+            @endforeach
+        @endif
     </div>
 @stop
 

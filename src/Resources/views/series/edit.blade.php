@@ -25,6 +25,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @if ($series->image)
+                            <img width="250px" src="{{url('/')}}/storage/sermons/{{$series->image}}">
+                        @else
+                            <label for="fileimage">Image</label>
+                            <input type="file" name="seriesimage">
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="body">Description</label>
                         <textarea class="form-control" id="summernote" name="description">{{$series->description}}</textarea>
                     </div>
@@ -45,7 +53,7 @@
     <script>
         $('#datetimepicker').datetimepicker({
             format: 'YYYY-MM-DD',
-            date: '{{$series->publicationdate}}'
+            date: '{{$series->startdate}}'
         });
     </script>
 @stop

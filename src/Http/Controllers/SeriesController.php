@@ -40,7 +40,7 @@ class SeriesController extends Controller
         $file = $request->file('seriesimage');
         $filename = time() . "." . $file->getClientOriginalExtension();
         $request->request->add(['image' => $filename]);
-        $file->move(base_path() . '/storage/sermons/',$filename);
+        $file->move(base_path() . '/storage/app/sermons/',$filename);
         $request->request->add(['slug' => Str::slug($request->title, '-')]);
         $series = Series::create($request->except('_token','_method','seriesimage'));
         return redirect()->route('series.show',$series->id)
@@ -50,7 +50,14 @@ class SeriesController extends Controller
     public function update(Request $request)
     {
         $series = Series::find($request->id);
-        $series->update($request->except('_token','_method'));
+        if ($request->file('seriesimage')) {
+            $file = $request->file('seriesimage');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $request->request->add(['image' => $filename]);      
+            $file->move(base_path() . '/storage/app/sermons/',$filename);  
+        }
+        $request->request->add(['slug' => Str::slug($request->title, '-')]);
+        $series->update($request->except('_token','_method','seriesimage'));
         return redirect()->route('series.index')
             ->withSuccess('Series updated');
     }
