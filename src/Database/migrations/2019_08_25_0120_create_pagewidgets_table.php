@@ -17,6 +17,7 @@ class CreatePagewidgetsTable extends Migration
             $table->increments('id');
             $table->string('widget');
 			$table->integer('page_id');
+			$table->string('zone');
 			$table->integer('order');
 			$table->text('data');
             $table->timestamps();

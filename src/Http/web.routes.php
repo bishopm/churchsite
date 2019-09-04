@@ -24,6 +24,24 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::post('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@store','as'=>'blogs.store']);
     Route::put('admin/blogs/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@update','as'=>'blogs.update']);
 
+    // Menus
+    Route::get('admin/menus', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenusController@index','as'=>'menus.index']);
+    Route::get('admin/menus/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenusController@create','as'=>'menus.create']);
+    Route::get('admin/menus/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenusController@show','as'=>'menus.show']);
+    Route::get('admin/menus/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenusController@edit','as'=>'menus.edit']);
+    Route::post('admin/menus', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenusController@store','as'=>'menus.store']);
+    Route::put('admin/menus/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenusController@update','as'=>'menus.update']);
+
+    // Menuitems
+    Route::get('admin/menus/{menu}/menuitems', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@index','as'=>'menuitems.index']);
+    Route::get('admin/menus/{menu}/menuitems/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@create','as'=>'menuitems.create']);
+    Route::get('admin/menus/{menu}/menuitems/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@show','as'=>'menuitems.show']);
+    Route::get('admin/menus/{menu}/menuitems/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@edit','as'=>'menuitems.edit']);
+    Route::put('admin/menus/{menu}/menuitems/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@update','as'=>'menuitems.update']);
+    Route::post('admin/menus/{menu}/menuitems', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@store','as'=>'menuitems.store']);
+    Route::post('admin/menus/{menu}/menuitems/update', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@reorder','as'=>'menuitems.reorder']);
+    Route::delete('admin/menus/{menu}/menuitems/{menuitem}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@destroy','as'=>'menuitems.destroy']);
+
     // Series
     Route::get('admin/sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@index','as'=>'series.index']);
     Route::get('admin/series/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@create','as'=>'series.create']);

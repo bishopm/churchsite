@@ -14,7 +14,11 @@ class WebController extends Controller
         } else {
             $page = Page::where('slug','home')->with('pagewidgets')->first();
         }
-        return view('churchsite::site.page',compact('page'));
+        $data=array();
+        foreach ($page->pagewidgets as $widget) {
+            $data[$widget->zone][]=$widget;
+        }
+        return view('churchsite::site.page',$data);
     }
     
 }

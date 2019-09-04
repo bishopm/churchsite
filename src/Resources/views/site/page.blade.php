@@ -4,9 +4,14 @@
 @stop
 
 @section('content')
+    @if (isset($header))
+        @foreach ($header as $widget)
+            @include('churchsite::widgets.' . $widget['widget'])
+        @endforeach
+    @endif
     <div class="row">
-        @if (isset($page['pagewidgets']))
-            @foreach ($page['pagewidgets'] as $widget)
+        @if (isset($body))
+            @foreach ($body as $widget)
                 @include('churchsite::widgets.' . $widget['widget'])
             @endforeach
         @endif

@@ -61,6 +61,14 @@ class ChurchsiteServiceProvider extends ServiceProvider
                     'text' => 'Sermons',
                     'url' => 'admin/sermons',
                     'icon' => 'microphone'
+                ]
+            );
+            $event->menu->add('WEBSITE STRUCTURE');
+            $event->menu->add(
+                [
+                    'text' => 'Menus',
+                    'url' => 'admin/menus',
+                    'icon' => 'ordered-list'
                 ],
                 [
                     'text' => 'View website',
