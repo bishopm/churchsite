@@ -42,6 +42,14 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::post('admin/menus/{menu}/menuitems/update', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@reorder','as'=>'menuitems.reorder']);
     Route::delete('admin/menus/{menu}/menuitems/{menuitem}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@destroy','as'=>'menuitems.destroy']);
 
+    // Pages
+    Route::get('admin/pages', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@index','as'=>'pages.index']);
+    Route::get('admin/pages/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@create','as'=>'pages.create']);
+    Route::get('admin/pages/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@show','as'=>'pages.show']);
+    Route::get('admin/pages/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@edit','as'=>'pages.edit']);
+    Route::post('admin/pages', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@store','as'=>'pages.store']);
+    Route::put('admin/pages/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@update','as'=>'pages.update']);
+
     // Series
     Route::get('admin/sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@index','as'=>'series.index']);
     Route::get('admin/series/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@create','as'=>'series.create']);

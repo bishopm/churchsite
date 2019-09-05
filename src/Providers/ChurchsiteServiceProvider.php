@@ -68,7 +68,12 @@ class ChurchsiteServiceProvider extends ServiceProvider
                 [
                     'text' => 'Menus',
                     'url' => 'admin/menus',
-                    'icon' => 'ordered-list'
+                    'icon' => 'list'
+                ],
+                [
+                    'text' => 'Pages',
+                    'url' => 'admin/pages',
+                    'icon' => 'file'
                 ],
                 [
                     'text' => 'View website',

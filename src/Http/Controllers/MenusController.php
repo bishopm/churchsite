@@ -3,7 +3,7 @@
 namespace Bishopm\Churchsite\Http\Controllers;
 
 use Bishopm\Churchsite\Models\Menu;
-use Bishopm\Churchsite\ViewModels\MenuViewModel;
+use Bishopm\Churchsite\ViewModels\MenuitemViewModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -19,7 +19,7 @@ class MenusController extends Controller {
 	public function edit($id)
     {
         $menu = Menu::find($id);
-        $viewModel = new MenuViewModel(Auth::user(),$menu);
+        $viewModel = new MenuitemViewModel(Auth::user(),$menu);
         return view('churchsite::menus.edit', $viewModel);
     }
 
@@ -35,10 +35,13 @@ class MenusController extends Controller {
             ->withSuccess('New menu added');
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        $this->menu->update($menu, $request->all());
-        return redirect()->route('admin.menus.index')->withSuccess('Menu has been updated');
+        $menu=Menu::find($id);
+        $menu->menu=$request->menu;
+        $menu->description=$request->description;
+        $menu->save();
+        return redirect()->route('menus.index')->withSuccess('Menu has been updated');
     }
 
 }

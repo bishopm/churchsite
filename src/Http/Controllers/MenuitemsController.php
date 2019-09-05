@@ -2,14 +2,13 @@
 
 namespace Bishopm\Churchsite\Http\Controllers;
 
-use Bishopm\Churchsite\Repositories\MenuitemsRepository;
-use Bishopm\Churchsite\Repositories\PagesRepository;
 use Bishopm\Churchsite\Models\Menuitem;
+use Bishopm\Churchsite\ViewModels\MenuitemViewModel;
+use Bishopm\Churchsite\Models\Menu;
+use Bishopm\Churchsite\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Bishopm\Churchsite\Http\Requests\CreateMenuitemRequest;
-use Bishopm\Churchsite\Http\Requests\UpdateMenuitemRequest;
-use Illuminate\Support\Facades\DB;
+use Auth;
 
 class MenuitemsController extends Controller {
 
@@ -18,14 +17,6 @@ class MenuitemsController extends Controller {
 	 *
 	 * @return Response
 	 */
-
-	private $menuitem, $pages;
-
-	public function __construct(MenuitemsRepository $menuitem, PagesRepository $pages)
-    {
-        $this->menuitem = $menuitem;
-        $this->pages = $pages;
-    }
 
 	public function index($menu)
 	{
@@ -43,19 +34,17 @@ class MenuitemsController extends Controller {
         return view('churchsite::menuitems.edit', $data);
     }
 
-    public function create($menu)
+    public function create($id)
     {
-        $data['pages']=$this->pages->all();
-        $data['items']=$this->menuitem->allMain($menu);
-        $data['menu']=$menu;
-        return view('churchsite::menuitems.create',$data);
+        $menu=Menu::find($id);
+        $viewModel = new MenuitemViewModel(Auth::user(),$menu);
+        return view('churchsite::menuitems.create',$viewModel);
     }
 
-    public function store(CreateMenuitemRequest $request)
+    public function store(Request $request)
     {
-        $this->menuitem->create($request->all());
-
-        return redirect()->route('admin.menus.edit',$request->menu_id)
+        Menuitem::create($request->all());
+        return redirect()->route('menus.edit',$request->menu_id)
             ->withSuccess('New menu item added');
     }
 
