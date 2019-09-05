@@ -80,7 +80,8 @@ class MenuitemViewModel extends ViewModel
     public function makeMenu()
     {
         $this->items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
-        Menu::create('main', function ($menu) {
+        dd($this->items);
+        Menu::create($this->menu->menu, function ($menu) {
             $menu->setPresenter(\Bishopm\Churchsite\Presenters\Bootstrap4Presenter::class);
             foreach ($this->items as $item) {
                 $this->children = $this->model->where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
@@ -103,7 +104,7 @@ class MenuitemViewModel extends ViewModel
                 }
             }
         });
-        return Menu::get('mainmenu');
+        return Menu::get($this->menu->menu);
     }
 
     public function makeFooter()
