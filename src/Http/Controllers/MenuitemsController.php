@@ -3,7 +3,7 @@
 namespace Bishopm\Churchsite\Http\Controllers;
 
 use Bishopm\Churchsite\Models\Menuitem;
-use Bishopm\Churchsite\ViewModels\MenuitemViewModel;
+use Bishopm\Churchsite\Http\ViewModels\MenuitemViewModel;
 use Bishopm\Churchsite\Models\Menu;
 use Bishopm\Churchsite\Models\Page;
 use Illuminate\Http\Request;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bishopm\Churchsite\ViewModels;
+namespace Bishopm\Churchsite\Http\ViewModels;
 
-use Spatie\ViewModels\ViewModel;
+use Spatie\Http\ViewModels\ViewModel;
 use Spatie\Tags\Tag;
 use Bishopm\Churchsite\Http\Controllers\SermonsController;
 use Bishopm\Churchsite\Models\User;

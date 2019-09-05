@@ -4,7 +4,7 @@ namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Bishopm\Churchsite\Models\Blog;
-use Bishopm\Churchsite\ViewModels\BlogViewModel;
+use Bishopm\Churchsite\Http\ViewModels\BlogViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use DB;

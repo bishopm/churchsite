@@ -100,6 +100,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias("JWTAuth", 'Tymon\JWTAuth\Facades\JWTAuth');
         AliasLoader::getInstance()->alias("Form", 'Collective\Html\FormFacade');
         AliasLoader::getInstance()->alias("HTML", 'Collective\Html\HtmlFacade');
+        AliasLoader::getInstance()->alias("Menu", 'Nwidart\Menus\Facades\Menu');
         $this->app['router']->aliasMiddleware('handlecors', 'Barryvdh\Cors\HandleCors');
         $this->app['router']->aliasMiddleware('jwt.auth', 'Tymon\JWTAuth\Middleware\GetUserFromToken');
     }

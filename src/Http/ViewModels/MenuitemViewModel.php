@@ -1,30 +1,31 @@
 <?php
 
-namespace Bishopm\Churchsite\ViewModels;
+namespace Bishopm\Churchsite\Http\ViewModels;
 
 use Spatie\ViewModels\ViewModel;
-use Bishopm\Churchsite\Http\Controllers\MenusController;
+use Bishopm\Churchsite\Http\Controllers\SitemenusController;
 use Bishopm\Churchsite\Models\User;
-use Bishopm\Churchsite\Models\Menu;
+use Bishopm\Churchsite\Models\Sitemenu;
 use Bishopm\Churchsite\Models\Page;
 use Bishopm\Churchsite\Models\Menuitem;
 use Illuminate\Database\Eloquent\Collection;
 use DB;
+use Menu;
 
 class MenuitemViewModel extends ViewModel
 {
     public $indexUrl = null;
 
-    public function __construct(User $user, Menu $menu = null)
+    public function __construct(User $user, Sitemenu $menu = null)
     {
         $this->user = $user;
         $this->menu = $menu;
-        $this->indexUrl = action([MenusController::class, 'index']); 
+        $this->indexUrl = action([SitemenusController::class, 'index']); 
     }
     
-    public function menu(): Menu
+    public function menu(): Sitemenu
     {
-        return $this->menu ?? new Menu();
+        return $this->menu ?? new Sitemenu();
     }
     
     public function pages(): Collection
@@ -80,36 +81,37 @@ class MenuitemViewModel extends ViewModel
     public function makeMenu()
     {
         $this->items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
-        dd($this->items);
-        Menu::create($this->menu->menu, function ($menu) {
-            $menu->setPresenter(\Bishopm\Churchsite\Presenters\Bootstrap4Presenter::class);
-            foreach ($this->items as $item) {
-                $this->children = $this->model->where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
-                if (!count($this->children)) {
-                    if ($item->url) {
-                        $menu->url(url(strtolower($item->url)), $item->title);
-                    } else {
-                        $menu->url('#', $item->title);
-                    }
-                } else {
-                    $menu->dropdown($item->title, function ($sub) {
-                        foreach ($this->children as $child) {
-                            if ($child->url) {
-                                $sub->url(url(strtolower($child->url)), $child->title);
-                            } else {
-                                $sub->url('#', $child->title);
-                            }
+        if (count($this->items)){
+            Menu::create($this->menu->menu, function ($menu) {
+                $menu->setPresenter(\Bishopm\Churchsite\Presenters\Bootstrap4Presenter::class);
+                foreach ($this->items as $item) {
+                    $this->children = $this->model->where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
+                    if (!count($this->children)) {
+                        if ($item->url) {
+                            $menu->url(url(strtolower($item->url)), $item->title);
+                        } else {
+                            $menu->url('#', $item->title);
                         }
-                    });
+                    } else {
+                        $menu->dropdown($item->title, function ($sub) {
+                            foreach ($this->children as $child) {
+                                if ($child->url) {
+                                    $sub->url(url(strtolower($child->url)), $child->title);
+                                } else {
+                                    $sub->url('#', $child->title);
+                                }
+                            }
+                        });
+                    }
                 }
-            }
-        });
-        return Menu::get($this->menu->menu);
+            });
+            return Menu::get($this->menu->menu);
+        }
     }
 
     public function makeFooter()
     {
-        $items=$this->model->where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
+        $items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
         $mainfooter=array();
         foreach ($items as $menu) {
             $children = $this->model->where('parent_id', $menu->id)->orderBy('position', 'ASC')->get();

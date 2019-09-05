@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Bishopm\Churchsite\Models\Sermon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Bishopm\Churchsite\ViewModels\SermonViewModel;
+use Bishopm\Churchsite\Http\ViewModels\SermonViewModel;
 use DB;
 use Auth;
 
