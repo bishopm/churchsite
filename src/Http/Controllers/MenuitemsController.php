@@ -4,7 +4,7 @@ namespace Bishopm\Churchsite\Http\Controllers;
 
 use Bishopm\Churchsite\Models\Menuitem;
 use Bishopm\Churchsite\Http\ViewModels\MenuitemViewModel;
-use Bishopm\Churchsite\Models\Menu;
+use Bishopm\Churchsite\Models\Sitemenu;
 use Bishopm\Churchsite\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,7 +36,7 @@ class MenuitemsController extends Controller {
 
     public function create($id)
     {
-        $menu=Menu::find($id);
+        $menu=Sitemenu::find($id);
         $viewModel = new MenuitemViewModel(Auth::user(),$menu);
         return view('churchsite::menuitems.create',$viewModel);
     }

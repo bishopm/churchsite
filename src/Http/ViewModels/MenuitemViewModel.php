@@ -58,7 +58,7 @@ class MenuitemViewModel extends ViewModel
                     $fin.="<li class=\"dd-item\" data-id=\"" . $child->id . "\">\n";
                     $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($this->menu->id,$child->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $child->id . "\"><i class=\"fa fa-times\"></i></a></div>";
                     $fin.="<div class=\"dd-handle\">" . $child->title . "</div>\n";
-                    $grandchildren = $this->model->where('parent_id', $child->id)->get();
+                    $grandchildren = Menuitem::where('parent_id', $child->id)->get();
                     if (count($grandchildren)) {
                         $fin.="<ol class=\"dd-list\">\n";
                         foreach ($grandchildren as $gchild) {
@@ -85,7 +85,7 @@ class MenuitemViewModel extends ViewModel
             Menu::create($this->menu->menu, function ($menu) {
                 $menu->setPresenter(\Bishopm\Churchsite\Presenters\Bootstrap4Presenter::class);
                 foreach ($this->items as $item) {
-                    $this->children = $this->model->where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
+                    $this->children = Menuitem::where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
                     if (!count($this->children)) {
                         if ($item->url) {
                             $menu->url(url(strtolower($item->url)), $item->title);
@@ -114,7 +114,7 @@ class MenuitemViewModel extends ViewModel
         $items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
         $mainfooter=array();
         foreach ($items as $menu) {
-            $children = $this->model->where('parent_id', $menu->id)->orderBy('position', 'ASC')->get();
+            $children = Menuitem::where('parent_id', $menu->id)->orderBy('position', 'ASC')->get();
             foreach ($children as $child) {
                 $mainfooter[$menu->title][]='<a href="' . url('/') . '/' . $child->url . '">' . $child->title . '</a>';
             }
