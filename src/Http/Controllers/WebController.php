@@ -18,6 +18,9 @@ class WebController extends Controller
         foreach ($page->pagewidgets as $widget) {
             $data[$widget->zone][]=$widget;
         }
+        if ($page->body) {
+            $data['page'] = $page->body;
+        }
         return view('churchsite::site.page',$data);
     }
     

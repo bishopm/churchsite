@@ -16,6 +16,12 @@
             @endforeach
         @endif
     </div>
+    <div class="row">
+        <div class="col mt-3 text-left">
+            {{$page}}
+        </div>
+    </div>
+
 @stop
 
 @section('js')

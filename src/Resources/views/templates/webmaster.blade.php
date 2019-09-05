@@ -25,6 +25,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
+        {!!$webmenu!!}
         <ul class="navbar-nav ml-auto">
           <li>
             Menu here

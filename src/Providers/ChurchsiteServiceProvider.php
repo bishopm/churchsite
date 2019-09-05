@@ -85,6 +85,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
         view()->composer('churchsite::widgets.latest_sermon', \Bishopm\Churchsite\Http\ViewComposers\LatestsermonComposer::class);
         view()->composer('churchsite::widgets.latest_blogs', \Bishopm\Churchsite\Http\ViewComposers\LatestblogsComposer::class);
         view()->composer('churchsite::page', \Bishopm\Churchsite\Http\ViewComposers\BackendComposer::class);
+        view()->composer('churchsite::templates.webmaster', \Bishopm\Churchsite\Http\ViewComposers\MenuComposer::class);
     }
 
     /**
