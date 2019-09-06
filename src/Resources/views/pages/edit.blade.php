@@ -4,56 +4,52 @@
 @stop
 
 @section('content_header')
-    {{ Form::pgHeader('Edit series',route('series.index')) }}
+    {{ Form::pgHeader('Edit page',route('pages.index')) }}
 @stop
 
 @section('content')
     @include('churchsite::shared.errors')
-    {!! Form::open(['route' => array('series.update', $series->id), 'method' => 'put','files'=>'true']) !!}
+    {!! Form::open(['route' => array('pages.update', $page->id), 'method' => 'put','files'=>'true']) !!}
     <div class="row" id="unsplash">
         <div class="col-md-12">
             <div class="box box-primary"> 
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="title">Series title</label>
-                        <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text" value="{{$series->title}}">
+                        <label for="title">Page name</label>
+                        <input class="form-control" data-slug="source" placeholder="Page name" name="title" id="title" type="text" value="{{$page->title}}">
                     </div>
                     <div class="form-group">
-                        <label for="publicationdate">Starting date</label>
-                        <div>
-                            <input type="text" class="form-control datetimepicker-input" id="datetimepicker" data-toggle="datetimepicker" data-target="#datetimepicker" name="startdate"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @if ($series->image)
-                            <img width="250px" src="{{url('/')}}/storage/sermons/{{$series->image}}">
-                        @else
-                            <label for="fileimage">Image</label>
-                            <input type="file" name="seriesimage">
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="body">Description</label>
-                        <textarea class="form-control" id="summernote" name="description">{{$series->description}}</textarea>
+                        <label for="body">Body</label>
+                        <textarea class="form-control" id="summernote" name="body">{{$page->body}}</textarea>
                     </div>
                 </div>
                 <div class="box-footer">
-                    {{Form::pgButtons('Update',route('series.index')) }}
+                    {{Form::pgButtons('Update',route('pages.index')) }}
                 </div>
             </div>
         </div>
     </div>
     {!! Form::close() !!}
+    <h3 class="text-center">Page layout</h3>
+    <div class="row">
+    @foreach ($page->pagewidgets as $widget)
+        @if ($widget->zone=='a')
+            <div class="col-md-12 text-center"><div class="my-lg-5">
+        @else
+            <div class="col-md-4 text-center"><div class="my-lg-5">
+        @endif
+            {{$widget->widget}}
+        </div></div>
+    @endforeach
+    </div>
 @stop
 
 @section('js')
-    <script src="{{asset('vendor/bishopm/js/moment.min.js')}}"></script>
-    <script src="{{asset('vendor/bishopm/js/datetimepicker.js')}}"></script>
-    <script src="{{asset('vendor/bishopm/css/datetimepicker.css')}}"></script>
+    <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
+    <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
     <script>
-        $('#datetimepicker').datetimepicker({
-            format: 'YYYY-MM-DD',
-            date: '{{$series->startdate}}'
-        });
+    $(document).ready(function() {
+        $('#summernote').summernote({height: 200});
+    });
     </script>
 @stop

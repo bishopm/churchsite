@@ -10,6 +10,6 @@ class Page extends Model
 
     public function pagewidgets()
     {
-        return $this->hasMany('Bishopm\Churchsite\Models\Pagewidget')->orderBy('order');
+        return $this->hasMany('Bishopm\Churchsite\Models\Pagewidget')->orderBy('zone')->orderBy('order');
     }
 }

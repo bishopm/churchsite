@@ -18,7 +18,7 @@ class PagesController extends Controller
 
     public function edit($id)
     {
-        $page = Page::find($id);
+        $page = Page::with('pagewidgets')->find($id);
         return view('churchsite::pages.edit',compact('page'));
     }
 
