@@ -16,7 +16,8 @@ class CreatePagesTable extends Migration
 			$table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('title');
-            $table->string('slug');
+			$table->string('slug');
+			$table->text('body');
             $table->timestamps();
 		});
 	}
