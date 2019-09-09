@@ -1,6 +1,29 @@
 @extends('churchsite::page')
 
 @section('css')
+<link href="{{asset('vendor/bishopm/css/jquery-ui.min.css')}}" rel="stylesheet">
+<link href="{{asset('vendor/bishopm/css/gridstack.css')}}" rel="stylesheet">
+<style>
+.grid-stack-item-content {
+    background: #367fa8;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+}
+
+.grid-stack-item-content .fa {
+    font-size: 64px;
+    display: block;
+    margin: 20px 0 10px;
+}
+
+header a, header a:hover { color: #fff; }
+
+.darklue { background: #2c3e50; color: #fff; }
+.darklue hr.star-light::after {
+    background-color: #2c3e50;
+}
+</style>
 @stop
 
 @section('content_header')
@@ -42,15 +65,13 @@
             {!! Form::close() !!}
         </div>
         <div class="tab-pane" id="layout" role="tabpanel">
-            <div class="row">
-                @foreach ($page->pagewidgets as $widget)
-                    @if ($widget->zone=='a')
-                        <div class="col-md-12 text-center">
-                    @else
-                        <div class="col-md-4 text-center">
+            <div class="grid-stack" data-gs-width="12" data-gs-animate="yes">
+                @foreach ($page->pagewidgets as $ndx=>$widget)
+                    @if ($widget->zone!=='q')
+                        <div class="grid-stack-item" data-gs-x="{{$ndx}}" data-gs-y="0" data-gs-width="{{$widget->width}}" data-gs-height="1">
+                            <div class="grid-stack-item-content">{{str_replace('_',' ',ucfirst($widget->widget))}}</div>
+                        </div>
                     @endif
-                    <div style="padding:20px;background-color:lightgrey;margin:15px;">{{str_replace('_',' ',ucfirst($widget->widget))}}</div>
-                    </div>
                 @endforeach
             </div>
         </div>
@@ -58,11 +79,24 @@
 @stop
 
 @section('js')
+    <script src="{{url('/')}}/vendor/bishopm/js/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+    <script src="{{url('/')}}/vendor/bishopm/js/gridstack.js"></script>
+    <script src="{{url('/')}}/vendor/bishopm/js/gridstack.jQueryUI.js"></script>
     <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
     <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
     <script>
     $(document).ready(function() {
         $('#summernote').summernote({height: 200});
+        $('.grid-stack').gridstack({
+            cellHeight: 80,
+            verticalMargin: 10,
+            width: 12,
+            resizable: {
+                handles: 'e, w'
+            },
+            alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        });
     });
     </script>
 @stop

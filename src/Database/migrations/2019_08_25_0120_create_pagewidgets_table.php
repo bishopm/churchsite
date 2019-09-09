@@ -19,6 +19,7 @@ class CreatePagewidgetsTable extends Migration
 			$table->integer('page_id');
 			$table->string('zone');
 			$table->integer('order');
+			$table->integer('width');
 			$table->text('data');
             $table->timestamps();
 		});
