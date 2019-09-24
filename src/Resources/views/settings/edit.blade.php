@@ -1,4 +1,4 @@
-@extends('churchsite::page')
+@extends('churchsite::setting')
 
 @section('css')
 <link href="{{asset('vendor/bishopm/css/jquery-ui.min.css')}}" rel="stylesheet">
@@ -27,49 +27,37 @@ header a, header a:hover { color: #fff; }
 @stop
 
 @section('content_header')
-    {{ Form::pgHeader('Edit page',route('pages.index')) }}
+    {{ Form::pgHeader('Edit setting',route('settings.index')) }}
 @stop
 
 @section('content')
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-            <a class="active" href="#content" role="tab" data-toggle="tab">Page content</a>
+            <a class="active" href="#content" role="tab" data-toggle="tab">Setting content</a>
         </li>
         <li>
-            <a href="#layout" role="tab" data-toggle="tab">Page layout</a>
+            <a href="#layout" role="tab" data-toggle="tab">Setting layout</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane active" id="content" role="tabpanel">
             @include('churchsite::shared.errors')
-            {!! Form::open(['route' => array('pages.update', $page->id), 'method' => 'put','files'=>'true']) !!}
+            {!! Form::open(['route' => array('settings.update', $setting->id), 'method' => 'put','files'=>'true']) !!}
             <div class="row" id="unsplash">
                 <div class="col-md-12">
                     <div class="box box-primary"> 
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="title">Page name</label>
-                                <input class="form-control" data-slug="source" placeholder="Page name" name="title" id="title" type="text" value="{{$page->title}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="tags">Subject</label>
-                                <select multiple="multiple" class="subjecttags form-control" name="tags[]">
-                                    @foreach ($subjects as $subject)
-                                        @if (in_array($subject->name,$subjecttags))
-                                            <option selected>{{$subject->name}}</option>
-                                        @else
-                                            <option>{{$subject->name}}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                                <label for="title">Setting name</label>
+                                <input class="form-control" data-slug="source" placeholder="Setting name" name="title" id="title" type="text" value="{{$setting->title}}">
                             </div>
                             <div class="form-group">
                                 <label for="body">Body</label>
-                                <textarea class="form-control" id="summernote" name="body">{{$page->body}}</textarea>
+                                <textarea class="form-control" id="summernote" name="body">{{$setting->body}}</textarea>
                             </div>
                         </div>
                         <div class="box-footer">
-                            {{Form::pgButtons('Update',route('pages.index')) }}
+                            {{Form::pgButtons('Update',route('settings.index')) }}
                         </div>
                     </div>
                 </div>
@@ -87,7 +75,7 @@ header a, header a:hover { color: #fff; }
                 <div class="grid-stack" id="grid-stack-{{$zone}}" data-gs-width="12" data-gs-animate="yes">
                 </div>
             @empty
-                No widgets have been added to this page
+                No widgets have been added to this setting
             @endforelse
         </div>
     </div>
@@ -125,7 +113,7 @@ header a, header a:hover { color: #fff; }
                     </div>
                     <div class="row" id="buttonrow" style="padding-top:10px;">
                         <div class="col-md-offset-4 col-md-8">            
-                            <button onclick="addWidget()" data-dismiss="modal" class="form-control btn btn-primary">Add widget to page</button>
+                            <button onclick="addWidget()" data-dismiss="modal" class="form-control btn btn-primary">Add widget to setting</button>
                         </div>
                     </div>
                 </div>
@@ -211,7 +199,7 @@ header a, header a:hover { color: #fff; }
             }
             $.ajax({
                 type : 'POST',
-                url : '{{route('pagewidgets.update',1)}}',
+                url : '{{route('settingwidgets.update',1)}}',
                 data: {
                     _token: '{{ csrf_token() }}',
                     items: JSON.stringify(widgets)
@@ -222,7 +210,7 @@ header a, header a:hover { color: #fff; }
     function addWidget () {
         $.ajax({
             type : 'POST',
-            url : '{{route('pagewidgets.store',$page->id)}}',
+            url : '{{route('settingwidgets.store',$setting->id)}}',
             data: {
                 _token: '{{ csrf_token() }}',
                 widget: $('#newwidget').val(),
@@ -238,7 +226,7 @@ header a, header a:hover { color: #fff; }
         $('#widget-' + item).remove();
         $.ajax({
             type : 'POST',
-            url : '{{route('pagewidgets.update',$page->id)}}',
+            url : '{{route('settingwidgets.update',$setting->id)}}',
             data: {
                 _token: '{{ csrf_token() }}',
                 delete: item
@@ -250,7 +238,7 @@ header a, header a:hover { color: #fff; }
         var sbox = '';
         $.ajax({
             type : 'GET',
-            url : '{{url('/')}}/admin/pages/{{$page->id}}/widgets/' + id
+            url : '{{url('/')}}/admin/settings/{{$setting->id}}/widgets/' + id
         }).then(response => {
             if (!response.data) {
                 sbox = 'This widget has no additional settings';
@@ -267,7 +255,7 @@ header a, header a:hover { color: #fff; }
     function updateSettings (id) {
         $.ajax({
             type : 'POST',
-            url : '{{route('pagewidgets.update',$page->id)}}',
+            url : '{{route('settingwidgets.update',$setting->id)}}',
             data: {
                 _token: '{{ csrf_token() }}',
                 data: $('#widgetsettings').serialize(),

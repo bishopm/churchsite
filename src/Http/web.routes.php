@@ -73,6 +73,21 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::post('admin/sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@store','as'=>'sermons.store']);
     Route::put('admin/sermons/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@update','as'=>'sermons.update']);    
 
+    // Settings
+    Route::get('admin/settings', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@index','as'=>'settings.index']);
+    Route::get('admin/settings/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@create','as'=>'settings.create']);
+    Route::get('admin/settings/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@show','as'=>'settings.show']);
+    Route::get('admin/settings/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@edit','as'=>'settings.edit']);
+    Route::post('admin/settings', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@store','as'=>'settings.store']);
+    Route::put('admin/settings/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@update','as'=>'settings.update']);
+
+    // Themes
+    Route::get('admin/themes', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@index','as'=>'themes.index']);
+    Route::get('admin/themes/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@create','as'=>'themes.create']);
+    Route::get('admin/themes/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@show','as'=>'themes.show']);
+    Route::get('admin/themes/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@edit','as'=>'themes.edit']);
+    Route::post('admin/themes', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@store','as'=>'themes.store']);
+    Route::put('admin/themes/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@update','as'=>'themes.update']);
 });
 
 Route::group(['middleware' => ['web']], function () {

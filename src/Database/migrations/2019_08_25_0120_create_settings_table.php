@@ -18,6 +18,7 @@ class CreateSettingsTable extends Migration
 			$table->integer('theme_id')->nullable();
 			$table->string('setting_key');
 			$table->string('setting_value');
+			$table->string('widget')->nullable();
             $table->timestamps();
 		});
 	}

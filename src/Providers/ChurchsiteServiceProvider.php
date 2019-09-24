@@ -77,6 +77,16 @@ class ChurchsiteServiceProvider extends ServiceProvider
                     'icon' => 'file'
                 ],
                 [
+                    'text' => 'Themes',
+                    'url' => 'admin/themes',
+                    'icon' => 'paint-brush'
+                ],
+                [
+                    'text' => 'Settings',
+                    'url' => 'admin/settings',
+                    'icon' => 'cog'
+                ],
+                [
                     'text' => 'View website',
                     'url' => '/',
                     'icon' => 'globe',
@@ -89,6 +99,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
         view()->composer('churchsite::widgets.latest_blogs', \Bishopm\Churchsite\Http\ViewComposers\LatestblogsComposer::class);
         view()->composer('churchsite::page', \Bishopm\Churchsite\Http\ViewComposers\BackendComposer::class);
         view()->composer('churchsite::templates.webmaster', \Bishopm\Churchsite\Http\ViewComposers\MenuComposer::class);
+        view()->composer('churchsite::templates.webmaster', \Bishopm\Churchsite\Http\ViewComposers\ThemeComposer::class);
     }
 
     /**

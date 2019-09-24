@@ -15,7 +15,8 @@ class CreateThemesTable extends Migration
 		Schema::create('themes', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
-			$table->string('theme');
+			$table->string('title');
+			$table->text('description')->nullable();
             $table->timestamps();
 		});
 	}

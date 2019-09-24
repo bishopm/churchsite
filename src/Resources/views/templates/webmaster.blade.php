@@ -12,10 +12,15 @@
 
   <!-- Bootstrap core CSS -->
   <link href="{{ asset('vendor/bishopm/css/bootstrap4.css') }}" rel="stylesheet">
-
+  <style>
+    a.footerlink {
+      color: {{$settings['footer_menu_item_colour']}};
+      text-decoration:none;
+    }
+  </style>
 </head>
 
-<body style="background-color:#cccccc;">
+<body style="background-color:{{$settings['footer_background_colour']}};">
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
@@ -54,7 +59,7 @@
   </nav>
 
   <!-- Page Content -->
-  <div style="background-color:white;">
+  <div style="background-color:{{$settings['body_background_colour']}};">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -68,7 +73,7 @@
       <div class="text-left pt-2">
         <div class="row mt-3">
           @foreach ($webfooter as $kk=>$wf)
-            <div class="col-sm-3"><h4>{{$kk}}</h4>
+            <div class="col-sm-3"><h4 style="color:{{$settings['footer_menu_item_colour']}}">{{$kk}}</h4>
               <ul class="list-unstyled">
                 @foreach ($wf as $wi)
                     <li>{!!$wi!!}</li>
