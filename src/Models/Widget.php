@@ -4,12 +4,12 @@ namespace Bishopm\Churchsite\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pagewidget extends Model
+class Widget extends Model
 {    
     protected $guarded = array('id');
 
-    public function widget()
+    public function pagewidgets()
     {
-        return $this->belongsTo('Bishopm\Churchsite\Models\Widget');
+        return $this->hasMany('Bishopm\Churchsite\Models\Pagewidget');
     }
 }

@@ -4,6 +4,7 @@ namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Bishopm\Churchsite\Models\Page;
+use Bishopm\Churchsite\Models\Widget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -18,8 +19,15 @@ class PagesController extends Controller
 
     public function edit($id)
     {
-        $page = Page::with('pagewidgets')->find($id);
-        return view('churchsite::pages.edit',compact('page'));
+        $data['page'] = Page::with('pagewidgets.widget')->find($id);
+        $data['widgets']['1header'] = array();
+        $data['widgets']['2body'] = array();
+        $data['widgets']['3footer'] = array();
+        foreach ($data['page']->pagewidgets as $widget) {
+            $data['widgets'][$widget->zone][] = $widget;
+        }
+        $data['widgetnames'] = Widget::orderBy('widget')->get();
+        return view('churchsite::pages.edit',$data);
     }
 
     public function show($id)

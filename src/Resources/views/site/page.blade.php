@@ -6,22 +6,24 @@
 @section('content')
     @if (isset($header))
         @foreach ($header as $widget)
-            @include('churchsite::widgets.' . $widget['widget'])
+            @include('churchsite::widgets.' . $widget['widget']['widget'])
         @endforeach
     @endif
-    <div class="row">
-        @if (isset($body))
+    @if (isset($body))
+        <div class="row mt-4">
             @foreach ($body as $widget)
-                @include('churchsite::widgets.' . $widget['widget'])
+                <div class="col-md-{{$widget->width}}">
+                    @include('churchsite::widgets.' . $widget['widget']['widget'])
+                </div>
             @endforeach
-        @endif
-    </div>
-    @if (isset($page))
-        <div class="row">
-            <div class="col mt-3 text-left">
-                {{$page}}
-            </div>
         </div>
+    @endif
+    @if (isset($footer))
+        <footer class="footer">
+            @foreach ($footer as $widget)
+                @include('churchsite::widgets.' . $widget['widget']['widget'])
+            @endforeach
+        </footer>
     @endif
 
 @stop

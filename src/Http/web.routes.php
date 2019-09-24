@@ -50,6 +50,14 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::post('admin/pages', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@store','as'=>'pages.store']);
     Route::put('admin/pages/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@update','as'=>'pages.update']);
 
+    // Page widgets
+    Route::get('admin/pages/{page}/widgets', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagewidgetsController@index','as'=>'pagewidgets.index']);
+    Route::get('admin/pages/{page}/widgets/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagewidgetsController@create','as'=>'pagewidgets.create']);
+    Route::get('admin/pages/{page}/widgets/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagewidgetsController@show','as'=>'pagewidgets.show']);
+    Route::get('admin/pages/{page}/widgets/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagewidgetsController@edit','as'=>'pagewidgets.edit']);
+    Route::post('admin/pages/{page}/widgets/store', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagewidgetsController@store','as'=>'pagewidgets.store']);
+    Route::post('admin/pages/{page}/widgets', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagewidgetsController@update','as'=>'pagewidgets.update']);
+
     // Series
     Route::get('admin/sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@index','as'=>'series.index']);
     Route::get('admin/series/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@create','as'=>'series.create']);
@@ -64,6 +72,7 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::get('admin/sermons/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@edit','as'=>'sermons.edit']);
     Route::post('admin/sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@store','as'=>'sermons.store']);
     Route::put('admin/sermons/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@update','as'=>'sermons.update']);    
+
 });
 
 Route::group(['middleware' => ['web']], function () {

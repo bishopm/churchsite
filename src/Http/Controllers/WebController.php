@@ -16,7 +16,8 @@ class WebController extends Controller
         }
         $data=array();
         foreach ($page->pagewidgets as $widget) {
-            $data[$widget->zone][]=$widget;
+            $zone = substr($widget->zone,1);
+            $data[$zone][]=$widget;
         }
         if ($page->body) {
             $data['page'] = $page->body;

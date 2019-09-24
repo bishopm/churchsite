@@ -1,4 +1,3 @@
-<div class="col-md-4">
 <h3>Find us</h3>
 <div class="mapouter">
     <div class="gmap_canvas">
@@ -9,5 +8,4 @@
         .gmap_canvas {overflow:hidden;background:none!important;height:500px;width:100%;}
     </style>
     </div>
-</div>
 </div>

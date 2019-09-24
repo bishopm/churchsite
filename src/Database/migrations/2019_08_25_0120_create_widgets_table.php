@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagewidgetsTable extends Migration
+class CreateWidgetsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,14 +12,11 @@ class CreatePagewidgetsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('pagewidgets', function(Blueprint $table) {
+		Schema::create('widgets', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('widget');
-			$table->integer('page_id');
-			$table->string('zone');
-			$table->integer('row');
-			$table->integer('col');
+			$table->string('widget');
+			$table->string('label');
 			$table->integer('width');
 			$table->text('data');
             $table->timestamps();
@@ -33,6 +30,6 @@ class CreatePagewidgetsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('pagewidgets');
+		Schema::drop('widgets');
 	}
 }

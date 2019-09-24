@@ -27,6 +27,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'churchsite');
         $this->loadMigrationsFrom(__DIR__.'/../Database/migrations');
         $this->publishes([__DIR__.'/../Assets' => public_path('vendor/bishopm')], 'public');
+        $this->publishes([__DIR__.'/../Resources/views/widgets' => public_path('vendor/bishopm/widgets')], 'public');
         config(['auth.providers.users.model'=>'Bishopm\Churchsite\Models\User']);
         config(['queue.default'=>'database']);
         Form::component('bsText', 'churchsite::components.text', ['name', 'label' => '', 'placeholder' => '', 'value' => null, 'attributes' => []]);
@@ -78,7 +79,9 @@ class ChurchsiteServiceProvider extends ServiceProvider
                 [
                     'text' => 'View website',
                     'url' => '/',
-                    'icon' => 'globe'
+                    'icon' => 'globe',
+                    'target' => '_blank',
+                    'active' => []
                 ]
             );
         });
