@@ -199,7 +199,7 @@ header a, header a:hover { color: #fff; }
             }
             $.ajax({
                 type : 'POST',
-                url : '{{route('settingwidgets.update',1)}}',
+                url : '{{route('pagewidgets.update',1)}}',
                 data: {
                     _token: '{{ csrf_token() }}',
                     items: JSON.stringify(widgets)
@@ -210,7 +210,7 @@ header a, header a:hover { color: #fff; }
     function addWidget () {
         $.ajax({
             type : 'POST',
-            url : '{{route('settingwidgets.store',$setting->id)}}',
+            url : '{{route('pagewidgets.store',$setting->id)}}',
             data: {
                 _token: '{{ csrf_token() }}',
                 widget: $('#newwidget').val(),
@@ -226,7 +226,7 @@ header a, header a:hover { color: #fff; }
         $('#widget-' + item).remove();
         $.ajax({
             type : 'POST',
-            url : '{{route('settingwidgets.update',$setting->id)}}',
+            url : '{{route('pagewidgets.update',$setting->id)}}',
             data: {
                 _token: '{{ csrf_token() }}',
                 delete: item
@@ -255,7 +255,7 @@ header a, header a:hover { color: #fff; }
     function updateSettings (id) {
         $.ajax({
             type : 'POST',
-            url : '{{route('settingwidgets.update',$setting->id)}}',
+            url : '{{route('pagewidgets.update',$setting->id)}}',
             data: {
                 _token: '{{ csrf_token() }}',
                 data: $('#widgetsettings').serialize(),

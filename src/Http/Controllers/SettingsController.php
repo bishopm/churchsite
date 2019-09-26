@@ -19,14 +19,7 @@ class SettingsController extends Controller
 
     public function edit($id)
     {
-        $data['setting'] = Setting::with('settingwidgets.widget')->find($id);
-        $data['widgets']['1header'] = array();
-        $data['widgets']['2body'] = array();
-        $data['widgets']['3footer'] = array();
-        foreach ($data['setting']->settingwidgets as $widget) {
-            $data['widgets'][$widget->zone][] = $widget;
-        }
-        $data['widgetnames'] = Widget::orderBy('widget')->get();
+        $data['setting'] = Setting::with('theme')->find($id);
         return view('churchsite::settings.edit',$data);
     }
 
