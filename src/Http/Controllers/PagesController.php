@@ -3,10 +3,11 @@
 namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Bishopm\Churchsite\Http\ViewModels\PageViewModel;
 use Bishopm\Churchsite\Models\Page;
-use Bishopm\Churchsite\Models\Widget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Auth;
 
 class PagesController extends Controller
 {
@@ -19,15 +20,9 @@ class PagesController extends Controller
 
     public function edit($id)
     {
-        $data['page'] = Page::with('pagewidgets.widget')->find($id);
-        $data['widgets']['1header'] = array();
-        $data['widgets']['2body'] = array();
-        $data['widgets']['3footer'] = array();
-        foreach ($data['page']->pagewidgets as $widget) {
-            $data['widgets'][$widget->zone][] = $widget;
-        }
-        $data['widgetnames'] = Widget::orderBy('widget')->get();
-        return view('churchsite::pages.edit',$data);
+        $page = Page::with('pagewidgets.widget')->find($id);
+        $viewModel = new PageViewModel(Auth::user(),$page);
+        return view('churchsite::pages.edit',$viewModel);
     }
 
     public function show($id)
@@ -38,13 +33,15 @@ class PagesController extends Controller
 
     public function create()
     {
-        return view('churchsite::pages.create');
+        $viewModel = new PageViewModel(Auth::user());
+        return view('churchsite::pages.create',$viewModel);
     }
 
     public function store(Request $request)
     {
         $request->request->add(['slug' => Str::slug($request->title, '-')]);
-        $page = Page::create($request->except('_token','_method'));
+        $page = Page::create($request->except('_token','tags','_method'));
+        $page->syncTagsWithType($request->tags, 'Blog');
         return redirect()->route('pages.index')
             ->withSuccess('Page created');
     }
@@ -59,7 +56,8 @@ class PagesController extends Controller
             $file->move(base_path() . '/storage/app/sermons/',$filename);  
         }
         $request->request->add(['slug' => Str::slug($request->title, '-')]);
-        $page->update($request->except('_token','_method','pagesimage'));
+        $page->update($request->except('_token','_method','pagesimage','tags'));
+        $page->syncTagsWithType($request->tags, 'Blog');
         return redirect()->route('pages.index')
             ->withSuccess('Page updated');
     }
