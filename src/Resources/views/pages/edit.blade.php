@@ -52,7 +52,7 @@ header a, header a:hover { color: #fff; }
                                 <input class="form-control" data-slug="source" placeholder="Page name" name="title" id="title" type="text" value="{{$page->title}}">
                             </div>
                             <div class="form-group">
-                                <label for="tags">Subject</label>
+                                <label for="tags">Subject (optional)</label>
                                 <select multiple="multiple" class="subjecttags form-control" name="tags[]">
                                     @foreach ($subjects as $subject)
                                         @if (in_array($subject->name,$subjecttags))
@@ -156,6 +156,11 @@ header a, header a:hover { color: #fff; }
     <script>
     $(document).ready(function() {
         $('#summernote').summernote({height: 200});
+        $('.subjecttags').select2({
+            placeholder: 'Select one or more subject tags',
+            tags: true,
+            width: '100%'
+        });
         $('#grid-stack-1header').gridstack({
             verticalMargin: 10,
             width: 12,
