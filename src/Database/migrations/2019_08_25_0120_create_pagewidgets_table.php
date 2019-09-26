@@ -15,7 +15,7 @@ class CreatePagewidgetsTable extends Migration
 		Schema::create('pagewidgets', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('widget');
+            $table->integer('widget_id');
 			$table->integer('page_id');
 			$table->string('zone');
 			$table->integer('row');
