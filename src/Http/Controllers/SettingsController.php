@@ -13,7 +13,7 @@ class SettingsController extends Controller
 
     public function index()
     {
-        $settings = Setting::orderBy('setting_key')->get();
+        $settings = Setting::whereNull('theme_id')->orderBy('setting_key')->get();
         return view('churchsite::settings.index',compact('settings'));
     }
 

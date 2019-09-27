@@ -23,7 +23,7 @@
 <body style="background-color:{{$settings['footer_background_colour']}};">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+  <nav class="navbar navbar-expand-lg navbar-{{$settings['menubar']}} bg-{{$settings['menubar']}} static-top">
     <div class="container">
       <a class="navbar-brand" href="{{url('/')}}"><b>Church</b>Net</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
             </li>
           @else
             <li class="nav-item">
-              <a style="color:white;" href="#" title="User login" data-toggle="modal" data-target="#modal-login" data-action-target="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a>
+              <a style="color:white;" title="User login" href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a>
             </li>
           @endif
         </ul>

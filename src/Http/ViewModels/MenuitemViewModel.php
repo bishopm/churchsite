@@ -116,7 +116,7 @@ class MenuitemViewModel extends ViewModel
         foreach ($items as $menu) {
             $children = Menuitem::where('parent_id', $menu->id)->orderBy('position', 'ASC')->get();
             foreach ($children as $child) {
-                $mainfooter[$menu->title][]='<a class="footerlink" href="' . url('/') . '/' . $child->url . '">' . $child->title . '</a>';
+                $mainfooter[$menu->title][]='<a class="footerlink" href="' . url('/') . '/page/' . $child->url . '">' . $child->title . '</a>';
             }
         }
         return $mainfooter;

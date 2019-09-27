@@ -19,7 +19,7 @@
                 <h5>Related blogs</h5>
                 <ul class="list-unstyled">
                     @foreach ($relatedBlogs as $rblog)
-                        <li>{{$rblog->title}}</li>
+                        <li><a href="{{route('blogs.show',$rblog->slug)}}">{{$rblog->title}}</a></li>
                     @endforeach
                 </ul>
             @endif
@@ -27,7 +27,7 @@
                 <h5>Related pages</h5>
                 <ul class="list-unstyled">
                     @foreach ($relatedPages as $rpage)
-                        <li>{{$rpage->title}}</li>
+                        <li><a href="{{url('/')}}/page/{{$rpage->slug}}">{{$rpage->title}}</a></li>
                     @endforeach
                 </ul>
             @endif
