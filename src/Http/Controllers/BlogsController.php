@@ -32,6 +32,13 @@ class BlogsController extends Controller
         return view('churchsite::blogs.create', $viewModel);
     }
 
+    public function show($slug)
+    {
+        $blog = Blog::whereSlug($slug)->with('tags')->first();
+        $viewModel = new BlogViewModel(null,$blog);
+        return view('churchsite::blogs.show', $viewModel);
+    }
+
     public function store(Request $request)
     {
         $slug = Str::slug($request->title, '-');

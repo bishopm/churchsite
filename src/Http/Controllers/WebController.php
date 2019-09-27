@@ -3,12 +3,15 @@
 namespace Bishopm\Churchsite\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Bishopm\Churchsite\Models\Blog;
 use Bishopm\Churchsite\Models\Page;
+use Bishopm\Churchsite\Models\Sermon;
+use Spatie\Tags\Tag;
 
 class WebController extends Controller
 {
 
-    public function show($page=null) {
+    public function show($model='page',$page=null) {
         if ($page) {
             $page = Page::where('slug',$page)->with('pagewidgets')->first();
         } else {
@@ -23,6 +26,20 @@ class WebController extends Controller
             $data['page'] = $page->body;
         }
         return view('churchsite::site.page',$data);
+    }
+
+    public function people($person) {
+        $data['blogs'] = Blog::withAnyTags(array($person),'Blogger')->get();
+        $data['sermons'] = Sermon::withAnyTags(array($person),'Preacher')->get();
+        $data['person'] = $person;
+        return view('churchsite::site.person',$data);
+    }
+
+    public function subject($subject) {
+        $data['blogs'] = Blog::withAnyTags(array($subject),'Blog')->get();
+        $data['pages'] = Page::withAnyTags(array($subject),'Blog')->get();
+        $data['subject'] = $subject;
+        return view('churchsite::site.subject',$data);
     }
     
 }

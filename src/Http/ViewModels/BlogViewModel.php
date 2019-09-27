@@ -7,6 +7,7 @@ use Spatie\Tags\Tag;
 use Bishopm\Churchsite\Http\Controllers\BlogsController;
 use Bishopm\Churchsite\Models\User;
 use Bishopm\Churchsite\Models\Blog;
+use Bishopm\Churchsite\Models\Page;
 use Illuminate\Database\Eloquent\Collection;
 use DB;
 
@@ -14,7 +15,7 @@ class BlogViewModel extends ViewModel
 {
     public $indexUrl = null;
 
-    public function __construct(User $user, Blog $blog = null)
+    public function __construct(User $user = null, Blog $blog = null)
     {
         $this->user = $user;
         $this->blog = $blog;
@@ -26,6 +27,16 @@ class BlogViewModel extends ViewModel
     {
         return $this->blog ?? new Blog();
     }
+
+    public function relatedBlogs()
+    {
+        return Blog::where('id','<>',$this->blog->id)->withAnyTags($this->blog->tags)->orderBy('publicationdate', 'desc')->get();      
+    }
+
+    public function relatedPages()
+    {
+        return Page::withAnyTags($this->blog->tags)->get();      
+    }
     
     public function subjecttags(): Array
     {
@@ -33,7 +44,7 @@ class BlogViewModel extends ViewModel
             $tags = $this->blog->tagsWithType('Blog');
             $stags = array();
             foreach ($tags as $tag) {
-                $stags[]=$tag->name;
+                $stags[$tag->slug]=$tag->name;
             }
             return $stags;
         } else {

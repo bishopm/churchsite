@@ -19,7 +19,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 
     // Blogs
     Route::get('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@index','as'=>'blogs.index']);
-    Route::get('admin/blogs/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@show','as'=>'blogs.show']);
+    Route::get('blog/{slug}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@show','as'=>'blogs.show']);
     Route::get('admin/blogs/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@create','as'=>'blogs.create']);
     Route::get('admin/blogs/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@edit','as'=>'blogs.edit']);
     Route::post('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@store','as'=>'blogs.store']);
@@ -46,7 +46,6 @@ Route::group(['middleware' => ['web','auth']], function () {
     // Pages
     Route::get('admin/pages', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@index','as'=>'pages.index']);
     Route::get('admin/pages/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@create','as'=>'pages.create']);
-    Route::get('admin/pages/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@show','as'=>'pages.show']);
     Route::get('admin/pages/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@edit','as'=>'pages.edit']);
     Route::post('admin/pages', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@store','as'=>'pages.store']);
     Route::put('admin/pages/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@update','as'=>'pages.update']);
@@ -92,5 +91,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 });
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/{page?}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@show','as'=>'pages.show']); 
+    Route::get('/people/{person}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@people','as'=>'site.people']); 
+    Route::get('/subject/{subject}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@subject','as'=>'site.subject']); 
+    Route::get('/{model?}/{page?}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@show','as'=>'site.show']); 
 });

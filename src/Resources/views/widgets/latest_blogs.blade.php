@@ -6,7 +6,7 @@
         <div class="text-left">{!!$blog->body!!}</div>
     @else
     <ul class="text-left">
-        <li>{{$blog->title}}</li>
+        <li><a href="{{route('blogs.show',$blog->slug)}}">{{$blog->title}}</a></li>
     </ul>
     @endif
 @endforeach
