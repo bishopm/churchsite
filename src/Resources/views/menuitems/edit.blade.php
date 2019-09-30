@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label for="target">Url</label>
-                    <select class="selectize" name="url" id="url">
+                    <select name="url" id="url" class="form-control">
                         <optgroup label="--- Custom URL ---">
                             <option value="{{strtolower($menuitem->url)}}">{{strtolower($menuitem->url)}}</option>
                         </optgroup>

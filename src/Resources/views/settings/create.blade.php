@@ -1,4 +1,4 @@
-@extends('churchsite::setting')
+@extends('churchsite::page')
 
 @section('css')
 @stop
@@ -15,8 +15,12 @@
             <div class="box box-primary"> 
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="title">Setting title</label>
-                        <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text">
+                        <label for="title">Setting key (lowercase with underscores)</label>
+                        <input class="form-control" data-slug="source" placeholder="Key" name="setting_key" id="setting_key" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Setting value</label>
+                        <input class="form-control" data-slug="source" placeholder="Value" name="setting_value" id="setting_value" type="text">
                     </div>
                 </div>
                 <div class="box-footer">

@@ -25,7 +25,7 @@
                             <tbody>
                                 @forelse ($settings as $setting)
                                     <tr>
-                                        <td><a href="{{route('settings.edit',$setting['id'])}}">{{ucfirst($setting->setting_key)}}</a></td>
+                                        <td><a href="{{route('settings.edit',$setting['id'])}}">{{ucfirst(str_replace('_',' ',$setting->setting_key))}}</a></td>
                                         <td><a href="{{route('settings.edit',$setting['id'])}}">{{$setting->setting_value}}</a></td>
                                     </tr>
                                 @empty

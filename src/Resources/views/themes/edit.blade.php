@@ -27,13 +27,23 @@
                     @foreach ($theme->settings as $setting)
                         <div class="form-group">
                             <label>{{ucfirst(str_replace('_',' ',$setting->setting_key))}}</label>
-                            @if (strpos($setting->setting_key,'colour') !== false)
+                            @if ($setting->widget == 'colour-picker')
                                 <div class="input-group colorpicker-component">
                                     <input name="id_{{$setting->id}}" type="text" value="{{$setting->setting_value}}" class="colourpicker form-control" />
                                     <span class="input-group-addon"><i></i></span>
                                 </div>
-                            @else
+                            @elseif ($setting->widget == 'text')
                                 <input class="form-control" placeholder="{{$setting->setting_key}}" name="id_{{$setting->id}}" id="id_{{$setting->id}}" type="text" value="{{$setting->setting_value}}">
+                            @elseif ((substr($setting->widget,0,1) == '[') && (substr($setting->widget,-1,1) == ']'))
+                                <select class="form-control" name="id_{{$setting->id}}">
+                                    @foreach (explode(",",substr($setting->widget,1,-1)) as $val)
+                                        @if ($val==$setting->setting_value)
+                                            <option selected>{{$val}}</option>
+                                        @else
+                                            <option>{{$val}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             @endif
                         </div>
                     @endforeach

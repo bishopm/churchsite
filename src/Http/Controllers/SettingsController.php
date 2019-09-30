@@ -36,7 +36,6 @@ class SettingsController extends Controller
 
     public function store(Request $request)
     {
-        $request->request->add(['slug' => Str::slug($request->title, '-')]);
         $setting = Setting::create($request->except('_token','_method'));
         return redirect()->route('settings.index')
             ->withSuccess('Setting created');

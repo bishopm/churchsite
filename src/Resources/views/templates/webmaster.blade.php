@@ -8,14 +8,21 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>ChurchNet</title>
+  <title>{{$settings['site_name']}}</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{{ asset('vendor/bishopm/css/bootstrap4.css') }}" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <style>
     a.footerlink {
       color: {{$settings['footer_menu_item_colour']}};
       text-decoration:none;
+    }
+    .theme-primary {
+      color: {{$settings['primary_colour']}}!important;
+    }
+    .theme-secondary {
+      color: {{$settings['secondary_colour']}}!important;
     }
   </style>
 </head>
@@ -25,7 +32,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-{{$settings['menubar']}} bg-{{$settings['menubar']}} static-top">
     <div class="container">
-      <a class="navbar-brand" href="{{url('/')}}"><b>Church</b>Net</a>
+      <a class="navbar-brand" href="{{url('/')}}">{!!$settings['site_logo']!!}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

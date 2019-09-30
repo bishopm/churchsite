@@ -1,4 +1,4 @@
-<h3 class="text-center">From our blog</h3>
+<h5 class="text-center pb-2 theme-secondary"><i class="fa fa-pencil fa-lg pr-3 theme-secondary"></i>From our blog</h5>
 @foreach ($blogs as $blog)
     @if ($loop->first)
         <img src="{{$blog->image}}" width="100%">

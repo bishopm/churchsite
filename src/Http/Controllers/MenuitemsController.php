@@ -25,11 +25,11 @@ class MenuitemsController extends Controller {
    		return view('churchsite::menuitems.index',$data);
 	}
 
-	public function edit($menu,Menuitem $menuitem)
+	public function edit($menu,$id)
     {
-        $data['pages']=$this->pages->all();
-        $data['items']=$this->menuitem->all();
-        $data['menuitem']=$menuitem;
+        $data['pages']=Page::orderBy('title')->get();
+        $data['menuitem']=Menuitem::find($id);
+        $data['items']=Menuitem::all();
         $data['menu']=$menu;
         return view('churchsite::menuitems.edit', $data);
     }

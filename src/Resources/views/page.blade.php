@@ -1,8 +1,7 @@
 @extends('churchsite::master')
 
 @section('adminlte_css') 
-    <link rel="stylesheet"
-          href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
     @stack('css')
     @yield('css')
 @stop
@@ -15,7 +14,6 @@
 
 @section('body')
     <div class="wrapper">
-
         <!-- Main Header -->
         <header class="main-header">
             @if(config('adminlte.layout') == 'top-nav')
@@ -23,13 +21,12 @@
                 <div class="container">
                     <div class="navbar-header">
                         <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="navbar-brand">
-                            {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+                            {!! $settings['site_logo'] !!}
                         </a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                             <i class="fa fa-bars"></i>
                         </button>
                     </div>
-
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">
@@ -41,9 +38,9 @@
             <!-- Logo -->
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
+                <span class="logo-mini">{!! $settings['site_mini_logo'] !!}</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</span>
+                <span class="logo-lg">{!! $settings['site_logo'] !!}</span>
             </a>
 
             <!-- Header Navbar -->
