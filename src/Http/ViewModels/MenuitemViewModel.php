@@ -3,9 +3,8 @@
 namespace Bishopm\Churchsite\Http\ViewModels;
 
 use Spatie\ViewModels\ViewModel;
-use Bishopm\Churchsite\Http\Controllers\SitemenusController;
+use Bishopm\Churchsite\Http\Controllers\MenuitemsController;
 use Bishopm\Churchsite\Models\User;
-use Bishopm\Churchsite\Models\Sitemenu;
 use Bishopm\Churchsite\Models\Page;
 use Bishopm\Churchsite\Models\Menuitem;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,16 +15,10 @@ class MenuitemViewModel extends ViewModel
 {
     public $indexUrl = null;
 
-    public function __construct(User $user, Sitemenu $menu = null)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->menu = $menu;
-        $this->indexUrl = action([SitemenusController::class, 'index']); 
-    }
-    
-    public function menu(): Sitemenu
-    {
-        return $this->menu ?? new Sitemenu();
+        $this->indexUrl = action([MenuitemsController::class, 'index']); 
     }
     
     public function pages(): Collection
@@ -35,35 +28,35 @@ class MenuitemViewModel extends ViewModel
 
     public function itemsformenu()
     {
-        return Menuitem::where('menu_id', $this->menu->id)->orderBy('parent_id', 'ASC')->get();
+        return Menuitem::orderBy('parent_id', 'ASC')->get();
     }
 
     public function allMain()
     {
-        return Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->get();
+        return Menuitem::where('parent_id', 0)->get();
     }
 
     public function menuitems(): String
     {
-        $items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
+        $items=Menuitem::where('parent_id', 0)->orderBy('position', 'ASC')->get();
         $fin="<ol class=\"dd-list\">";
         foreach ($items as $item) {
             $fin.="<li class=\"dd-item\" data-id=\"" . $item->id . "\">\n";
-            $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($this->menu->id,$item->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $item->id . "\"><i class=\"fa fa-times\"></i></a></div>";
+            $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($item->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $item->id . "\"><i class=\"fa fa-times\"></i></a></div>";
             $fin.="<div class=\"dd-handle\">" . $item->title . "</div>\n";
             $children = Menuitem::where('parent_id', $item->id)->orderBy('position')->get();
             if (count($children)) {
                 $fin.="<ol class=\"dd-list\">\n";
                 foreach ($children as $child) {
                     $fin.="<li class=\"dd-item\" data-id=\"" . $child->id . "\">\n";
-                    $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($this->menu->id,$child->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $child->id . "\"><i class=\"fa fa-times\"></i></a></div>";
+                    $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($child->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $child->id . "\"><i class=\"fa fa-times\"></i></a></div>";
                     $fin.="<div class=\"dd-handle\">" . $child->title . "</div>\n";
                     $grandchildren = Menuitem::where('parent_id', $child->id)->get();
                     if (count($grandchildren)) {
                         $fin.="<ol class=\"dd-list\">\n";
                         foreach ($grandchildren as $gchild) {
                             $fin.="<li class=\"dd-item\" data-id=\"" . $gchild->id . "\">\n";
-                            $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($this->menu->id,$gchild->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $gchild->id . "\"><i class=\"fa fa-times\"></i></a></div>";
+                            $fin.="<div class=\"btn-group\" role=\"group\" aria-label=\"Action buttons\" style=\"display: inline\"><a class=\"btn btn-sm btn-info\" style=\"float:left;\" href=\"" . route('menuitems.edit', array($gchild->id)) . "\"><i class=\"fa fa-pencil\"></i></a><a class=\"btn btn-sm btn-danger jsDeleteMenuItem\" style=\"float:left; margin-right: 15px;\" data-item-id=\"" . $gchild->id . "\"><i class=\"fa fa-times\"></i></a></div>";
                             $fin.="<div class=\"dd-handle\">" . $gchild->title . "</div>\n";
                             $fin.="</li>";
                         }
@@ -80,15 +73,15 @@ class MenuitemViewModel extends ViewModel
 
     public function makeMenu()
     {
-        $this->items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
+        $this->items=Menuitem::where('parent_id', 0)->orderBy('position', 'ASC')->get();
         if (count($this->items)){
-            Menu::create($this->menu->menu, function ($menu) {
+            Menu::create('default', function ($menu) {
                 $menu->setPresenter(\Bishopm\Churchsite\Presenters\Bootstrap4Presenter::class);
                 foreach ($this->items as $item) {
                     $this->children = Menuitem::where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
                     if (!count($this->children)) {
                         if ($item->url) {
-                            $menu->url(url(strtolower($item->url)), $item->title);
+                            $menu->url(url('page/' . strtolower($item->url)), $item->title);
                         } else {
                             $menu->url('#', $item->title);
                         }
@@ -96,7 +89,7 @@ class MenuitemViewModel extends ViewModel
                         $menu->dropdown($item->title, function ($sub) {
                             foreach ($this->children as $child) {
                                 if ($child->url) {
-                                    $sub->url(url(strtolower($child->url)), $child->title);
+                                    $sub->url(url('page/' . strtolower($child->url)), $child->title);
                                 } else {
                                     $sub->url('#', $child->title);
                                 }
@@ -105,13 +98,13 @@ class MenuitemViewModel extends ViewModel
                     }
                 }
             });
-            return Menu::get($this->menu->menu);
+            return Menu::get('default');
         }
     }
 
     public function makeFooter()
     {
-        $items=Menuitem::where('menu_id', $this->menu->id)->where('parent_id', 0)->orderBy('position', 'ASC')->get();
+        $items=Menuitem::where('parent_id', 0)->orderBy('position', 'ASC')->get();
         $mainfooter=array();
         foreach ($items as $menu) {
             $children = Menuitem::where('parent_id', $menu->id)->orderBy('position', 'ASC')->get();

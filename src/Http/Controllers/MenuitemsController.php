@@ -18,40 +18,38 @@ class MenuitemsController extends Controller {
 	 * @return Response
 	 */
 
-	public function index($menu)
+	public function index()
 	{
-        $data['menuitems'] = $this->menuitem->all();
-        $data['menu'];
-   		return view('churchsite::menuitems.index',$data);
+        $viewModel = new MenuitemViewModel(Auth::user());
+        return view('churchsite::menuitems.index', $viewModel);
 	}
 
-	public function edit($menu,$id)
+	public function edit($id)
     {
         $data['pages']=Page::orderBy('title')->get();
         $data['menuitem']=Menuitem::find($id);
         $data['items']=Menuitem::all();
-        $data['menu']=$menu;
         return view('churchsite::menuitems.edit', $data);
     }
 
-    public function create($id)
+    public function create()
     {
-        $menu=Sitemenu::find($id);
-        $viewModel = new MenuitemViewModel(Auth::user(),$menu);
+        $viewModel = new MenuitemViewModel(Auth::user());
         return view('churchsite::menuitems.create',$viewModel);
     }
 
     public function store(Request $request)
     {
         Menuitem::create($request->all());
-        return redirect()->route('menus.edit',$request->menu_id)
+        return redirect()->route('menuitems.index')
             ->withSuccess('New menu item added');
     }
 
-    public function update($menu, Menuitem $menuitem, UpdateMenuitemRequest $request)
+    public function update($id, Request $request)
     {
-        $this->menuitem->update($menuitem, $request->all());
-        return redirect()->route('admin.menus.edit',$menu)->withSuccess('Menuitem has been updated');
+        $menuitem = Menuitem::find($id);
+        $menuitem->update($menuitem, $request->all());
+        return redirect()->route('menuitems.index')->withSuccess('Menuitem has been updated');
     }
 
     public function reorder(Request $request)

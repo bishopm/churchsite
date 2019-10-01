@@ -15,7 +15,6 @@ class CreateMenuitemsTable extends Migration
 		Schema::create('menuitems', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
       		$table->increments('id');
-			$table->integer('menu_id');
 			$table->integer('parent_id')->default(0);
 			$table->string('title');
 			$table->string('url')->nullable();

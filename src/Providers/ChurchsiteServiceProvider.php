@@ -65,7 +65,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
             $event->menu->add(
                 [
                     'text' => 'Menus',
-                    'url' => 'admin/menus',
+                    'url' => 'admin/menu',
                     'icon' => 'list'
                 ],
                 [
