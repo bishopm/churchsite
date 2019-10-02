@@ -3,6 +3,7 @@
 @section('css')
 <link href="{{asset('vendor/bishopm/css/jquery-ui.min.css')}}" rel="stylesheet">
 <link href="{{asset('vendor/bishopm/css/gridstack.css')}}" rel="stylesheet">
+<link href="{{ asset('/vendor/bishopm/css/croppie.css') }}" rel="stylesheet" type="text/css" />
 <style>
 .grid-stack-item-content {
     color: white;
@@ -142,6 +143,7 @@ header a, header a:hover { color: #fff; }
                 <div id="settings" class="modal-body">
                 </div>
             </div>
+            @include('churchsite::shared.filemanager-modal',['folder'=>'slides'])
         </div>
     </div>
 @stop
@@ -153,6 +155,7 @@ header a, header a:hover { color: #fff; }
     <script src="{{url('/')}}/vendor/bishopm/js/gridstack.jQueryUI.js"></script>
     <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
     <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
+    <script src="{{ asset('/vendor/bishopm/js/croppie.js') }}" type="text/javascript"></script>
     <script>
     $(document).ready(function() {
         $('#summernote').summernote({height: 200});
@@ -280,5 +283,6 @@ header a, header a:hover { color: #fff; }
             }
         });
     }
+    @include('churchsite::shared.filemanager-modal-script',['folder'=>'slides','width'=>930,'height'=>250])
     </script>
 @stop

@@ -35,6 +35,15 @@ class WebController extends Controller
         return view('churchsite::site.person',$data);
     }
 
+    public function addimage(Request $request)
+    {
+        if ($request->file('uploadfile')) {
+            $fullname = strval(time()) . "." . $request->file('uploadfile')->getClientOriginalExtension();
+            $request->file('uploadfile')->move(base_path() . '/storage/app/public/' . $request->input('folder'), $fullname);
+            return $fullname;
+        }
+    }
+
     public function subject($subject) {
         $data['blogs'] = Blog::withAnyTags(array($subject),'Blog')->get();
         $data['pages'] = Page::withAnyTags(array($subject),'Blog')->get();

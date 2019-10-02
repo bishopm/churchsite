@@ -25,6 +25,10 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::post('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@store','as'=>'blogs.store']);
     Route::put('admin/blogs/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@update','as'=>'blogs.update']);
 
+    // Images
+    Route::post('admin/addimage', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Web\WebController@addimage','as'=>'admin.addimage']);
+    Route::post('admin/search', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Web\WebController@search','as'=>'admin.search']);
+
     // Menuitems
     Route::get('admin/menu', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@index','as'=>'menuitems.index']);
     Route::get('admin/menu/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@create','as'=>'menuitems.create']);
