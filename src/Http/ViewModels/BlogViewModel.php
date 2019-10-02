@@ -30,12 +30,16 @@ class BlogViewModel extends ViewModel
 
     public function relatedBlogs()
     {
-        return Blog::where('id','<>',$this->blog->id)->withAnyTags($this->blog->tags)->orderBy('publicationdate', 'desc')->get();      
+        if ($this->blog) {
+            return Blog::where('id','<>',$this->blog->id)->withAnyTags($this->blog->tags)->orderBy('publicationdate', 'desc')->get();      
+        }
     }
 
     public function relatedPages()
     {
-        return Page::withAnyTags($this->blog->tags)->get();      
+        if ($this->blog) {
+            return Page::withAnyTags($this->blog->tags)->get();      
+        }
     }
     
     public function subjecttags(): Array

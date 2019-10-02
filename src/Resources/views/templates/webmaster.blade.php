@@ -14,7 +14,7 @@
   <link href="{{ asset('vendor/bishopm/css/bootstrap4.css') }}" rel="stylesheet">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <style>
-    a.footerlink {
+    a.footerlink, a.footerlink:hover {
       color: {{$settings['footer_menu_item_colour']}};
       text-decoration:none;
     }
@@ -24,13 +24,26 @@
     .theme-secondary {
       color: {{$settings['secondary_colour']}}!important;
     }
+    .bg-theme {
+      background-color: {{$settings['menubar_colour']}};
+    }
+    a {
+      color: {{$settings['primary_colour']}};
+    }
+    a:hover {
+      color: {{$settings['secondary_colour']}};
+      text-decoration:none;
+    }
+    .badge-primary {
+      background-color: {{$settings['primary_colour']}};
+    }
   </style>
 </head>
 
-<body style="background-color:{{$settings['footer_background_colour']}};">
+<body style="background-color:{{$settings['body_background_colour']}};">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-{{$settings['menubar']}} bg-{{$settings['menubar']}} static-top">
+  <nav class="navbar navbar-expand-lg navbar-{{$settings['menubar']}} bg-theme static-top">
     <div class="container">
       <a class="navbar-brand" href="{{url('/')}}">{!!$settings['site_logo']!!}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,32 +79,32 @@
   </nav>
 
   <!-- Page Content -->
-  <div style="background-color:{{$settings['body_background_colour']}};">
-    <div class="container">
+  <div>
+    <div class="container pb-3">
       <div class="row">
         <div class="col-lg-12 text-center">
           @yield('content')
         </div>
       </div>
     </div>
-  </div>
-  <footer class="footer">
-    <div class="container">
-      <div class="text-left pt-2">
-        <div class="row mt-3">
-          @foreach ($webfooter as $kk=>$wf)
-            <div class="col-sm-3"><h4 style="color:{{$settings['footer_menu_item_colour']}}">{{$kk}}</h4>
-              <ul class="list-unstyled">
-                @foreach ($wf as $wi)
-                    <li>{!!$wi!!}</li>
-                @endforeach
-              </ul>
-            </div>
-          @endforeach
+    <footer class="footer pb-5" style="background-color:{{$settings['footer_background_colour']}};">
+      <div class="container">
+        <div class="text-left pt-2">
+          <div class="row mt-3">
+            @foreach ($webfooter as $kk=>$wf)
+              <div class="col-sm-3"><h4 style="color:{{$settings['footer_menu_item_colour']}}">{{$kk}}</h4>
+                <ul class="list-unstyled">
+                  @foreach ($wf as $wi)
+                      <li>{!!$wi!!}</li>
+                  @endforeach
+                </ul>
+              </div>
+            @endforeach
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
   <!-- Bootstrap core JavaScript -->
   <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
   <script src="{{ asset('vendor/bishopm/js/popper.js') }}"></script>

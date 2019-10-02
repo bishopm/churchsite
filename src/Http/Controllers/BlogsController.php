@@ -43,7 +43,7 @@ class BlogsController extends Controller
     {
         $slug = Str::slug($request->title, '-');
         $request->request->add(['slug' => $slug]);
-        $blog = Blog::create($request->except('_token','tags','author'));
+        $blog = Blog::create($request->except('_token','tags','author','files'));
         $blog->syncTagsWithType($request->tags, 'Blog');
         $blog->syncTagsWithType(array($request->author), 'Blogger');
         return redirect()->route('blogs.index')

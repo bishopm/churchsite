@@ -48,7 +48,7 @@ class MenuitemsController extends Controller {
     public function update($id, Request $request)
     {
         $menuitem = Menuitem::find($id);
-        $menuitem->update($menuitem, $request->all());
+        $menuitem->update($request->all());
         return redirect()->route('menuitems.index')->withSuccess('Menuitem has been updated');
     }
 
@@ -80,11 +80,11 @@ class MenuitemsController extends Controller {
         print "Done!";
     }
 
-    public function destroy($menu, Menuitem $menuitem)
+    public function destroy($id)
     {
-        $this->menuitem->destroy($menuitem);
-
-        return redirect()->route('admin.menus.edit',$menu)->withSuccess('Menu item has been deleted');
+        $menuitem = Menuitem::find($id);
+        $menuitem->delete();
+        return redirect()->route('menuitems.index')->withSuccess('Menu item has been deleted');
     }
 
 }

@@ -51,8 +51,8 @@
             var self = $(this),
                 menuItemId = self.data('item-id');
             $.ajax({
-                type: 'DELETE',
-                url: "{{url('/')}}/admin/menuitems/" + menuItemId,
+                type: 'POST',
+                url: "{{url('/')}}/admin/menu/delete/" + menuItemId,
                 data: {
                     _token: '{{ csrf_token() }}',
                      menuitem: menuItemId

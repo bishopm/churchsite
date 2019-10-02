@@ -33,7 +33,7 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::put('admin/menu/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@update','as'=>'menuitems.update']);
     Route::post('admin/menu', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@store','as'=>'menuitems.store']);
     Route::post('admin/menu/update', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@reorder','as'=>'menuitems.reorder']);
-    Route::delete('admin/menu/{menuitem}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@destroy','as'=>'menuitems.destroy']);
+    Route::post('admin/menu/delete/{menuitem}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\MenuitemsController@destroy','as'=>'menuitems.destroy']);
 
     // Pages
     Route::get('admin/pages', ['uses'=>'Bishopm\Churchsite\Http\Controllers\PagesController@index','as'=>'pages.index']);
