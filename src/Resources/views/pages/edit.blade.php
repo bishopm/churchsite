@@ -3,7 +3,6 @@
 @section('css')
 <link href="{{asset('vendor/bishopm/css/jquery-ui.min.css')}}" rel="stylesheet">
 <link href="{{asset('vendor/bishopm/css/gridstack.css')}}" rel="stylesheet">
-<link href="{{ asset('/vendor/bishopm/css/croppie.css') }}" rel="stylesheet" type="text/css" />
 <style>
 .grid-stack-item-content {
     color: white;
@@ -134,7 +133,7 @@ header a, header a:hover { color: #fff; }
         </div>
     </div>
     <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -143,7 +142,6 @@ header a, header a:hover { color: #fff; }
                 <div id="settings" class="modal-body">
                 </div>
             </div>
-            @include('churchsite::shared.filemanager-modal',['folder'=>'slides'])
         </div>
     </div>
 @stop
@@ -155,7 +153,6 @@ header a, header a:hover { color: #fff; }
     <script src="{{url('/')}}/vendor/bishopm/js/gridstack.jQueryUI.js"></script>
     <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
     <script src="{{asset('vendor/bishopm/summernote.min.js')}}"></script>
-    <script src="{{ asset('/vendor/bishopm/js/croppie.js') }}" type="text/javascript"></script>
     <script>
     $(document).ready(function() {
         $('#summernote').summernote({height: 200});
@@ -265,7 +262,16 @@ header a, header a:hover { color: #fff; }
             } else {
                 sbox = '<form id="widgetsettings">';
                 $.each(JSON.parse(response.data), function( index, value ) {
-                    sbox = sbox + '<div class="row" style="padding-bottom:5px;"><div class="col-md-3">' + index.toUpperCase() + '</div><div class="col-md-9"><input class="form-control" name="' + index +'" value="' + value + '"></div></div>';
+                    sbox = sbox + '<div class="row" style="padding-bottom:5px;"><div class="col-md-3">' + index.toUpperCase() + '</div><div class="col-md-9">';
+                    if (index === 'files') {
+                        for (var fndx in value) {
+                            if (value[fndx] !== '.' && value[fndx] !== '..') {
+                                sbox = sbox + '<img class="img-thumbnail" src="{{url('/') . '/storage/slides/'}}' + value[fndx] +'"> ';
+                            }
+                        }
+                    } else {
+                        sbox = sbox + '<input class="form-control" name="' + index +'" value="' + value + '"></div></div>';
+                    }
                 });
                 sbox = sbox + '<div class="row"><div class="col-md-offset-3 col-md-9"><a href="#" onclick="updateSettings(' + id + ')" class="btn btn-primary pull-right" data-dismiss="modal">Update</a></div></div></form>';
             }
@@ -283,6 +289,5 @@ header a, header a:hover { color: #fff; }
             }
         });
     }
-    @include('churchsite::shared.filemanager-modal-script',['folder'=>'slides','width'=>930,'height'=>250])
     </script>
 @stop

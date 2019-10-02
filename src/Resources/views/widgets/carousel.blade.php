@@ -1,5 +1,5 @@
 <div id="myCarousel" class="carousel slide carousel-fade hidden-xs-up mb-3" data-ride="carousel">
-  @if (count((json_decode($widget->data)->slides))>11)
+  @if (count((json_decode($widget->data)->images))>11)
     <ol class="carousel-indicators">
       @foreach ($sslides as $counter)
         @if ($loop->first)
@@ -11,7 +11,7 @@
     </ol>
   @endif
   <div class="carousel-inner">
-    @foreach (json_decode($widget->data)->slides as $slide)
+    @foreach (json_decode($widget->data)->images as $slide)
       @if ($loop->first)
         <div class="carousel-item active">
       @else
@@ -27,7 +27,7 @@
       </div>
     @endforeach
   </div>
-  @if (count((json_decode($widget->data)->slides))>1)
+  @if (count((json_decode($widget->data)->images))>1)
     <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>

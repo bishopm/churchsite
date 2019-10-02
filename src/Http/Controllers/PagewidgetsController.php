@@ -29,7 +29,13 @@ class PagewidgetsController extends Controller
 
     public function show($page, $id)
     {
-        return Pagewidget::with('widget')->find($id);
+        $pw = Pagewidget::with('widget')->find($id);
+        $data = json_decode($pw->data);
+        if (isset($data->folder)) {
+            $data->files = scandir(public_path() . '/storage/' . $data->folder);
+        }
+        $pw->data=json_encode($data);
+        return $pw;
     }
 
     public function create()
