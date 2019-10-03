@@ -266,11 +266,11 @@ header a, header a:hover { color: #fff; }
                     if (index === 'files') {
                         for (var fndx in value) {
                             if (value[fndx] !== '.' && value[fndx] !== '..') {
-                                sbox = sbox + '<img class="img-thumbnail" src="{{url('/') . '/storage/slides/'}}' + value[fndx] +'"> ';
+                                sbox = sbox + '<div onclick="toggleImage(\'' + value[fndx]+ '\')" class="col-sm-6 text-center" style="margin-top:10px;"><img class="img-thumbnail" src="{{url('/') . '/storage/slides/'}}' + value[fndx] +'"><br>' + value[fndx] + '</div>';
                             }
                         }
                     } else {
-                        sbox = sbox + '<input class="form-control" name="' + index +'" value="' + value + '"></div></div>';
+                        sbox = sbox + '<input id="' + index +'" class="form-control" name="' + index +'" value="' + value + '"></div></div>';
                     }
                 });
                 sbox = sbox + '<div class="row"><div class="col-md-offset-3 col-md-9"><a href="#" onclick="updateSettings(' + id + ')" class="btn btn-primary pull-right" data-dismiss="modal">Update</a></div></div></form>';
@@ -278,6 +278,20 @@ header a, header a:hover { color: #fff; }
             $('#settings').html(sbox);
         });
     }
+    function toggleImage(img) {
+        var images = $('#images').val();
+        if (!images) {
+            images=img;
+        } else if (images.includes(img)) {
+            images = images.replace(',' + img,'');
+            images = images.replace(img + ',','');
+            images = images.replace(img,'');
+        } else {
+            images=images + ',' + img;
+        }
+        $('#images').val(images);
+    }
+
     function updateSettings (id) {
         $.ajax({
             type : 'POST',
