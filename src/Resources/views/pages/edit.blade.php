@@ -257,7 +257,7 @@ header a, header a:hover { color: #fff; }
             type : 'GET',
             url : '{{url('/')}}/admin/pages/{{$page->id}}/widgets/' + id
         }).then(response => {
-            if (!response.data) {
+            if (response.data === 'null') {
                 sbox = 'This widget has no additional settings';
             } else {
                 sbox = '<form id="widgetsettings">';
@@ -273,7 +273,7 @@ header a, header a:hover { color: #fff; }
                         sbox = sbox + '<input id="' + index +'" class="form-control" name="' + index +'" value="' + value + '"></div></div>';
                     }
                 });
-                sbox = sbox + '<div class="row"><div class="col-md-offset-3 col-md-9"><a href="#" onclick="updateSettings(' + id + ')" class="btn btn-primary pull-right" data-dismiss="modal">Update</a></div></div></form>';
+                sbox = sbox + '<div class="row"><div class="col-md-offset-3 col-md-9" style="margin-top:15px;"><a href="#" onclick="updateSettings(' + id + ')" class="btn btn-primary pull-right" data-dismiss="modal">Update</a></div></div></form>';
             }
             $('#settings').html(sbox);
         });

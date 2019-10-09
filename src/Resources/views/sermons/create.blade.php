@@ -38,8 +38,8 @@
                         <input class="form-control" data-slug="source" placeholder="Readings" name="readings" id="readings" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="mp3">Link to MP3</label>
-                        <input class="form-control" data-slug="source" placeholder="MP3" name="mp3" id="mp3" type="text">
+                        <label for="mp3">Mp3 file</label>
+                        <input class="form-control" data-slug="source" placeholder="MP3" name="mp3" id="mp3" type="file">
                     </div>
                     <div class="form-group">
                         <label for="status">Status</label>

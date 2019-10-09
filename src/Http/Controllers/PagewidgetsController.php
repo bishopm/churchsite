@@ -76,7 +76,17 @@ class PagewidgetsController extends Controller
             $fields = explode("&",urldecode($request->data));
             $json = "{";
             foreach ($fields as $field) {
-                 $json = $json . '"' . substr($field,0,strpos($field,'=')) . '":"' . substr($field,1+strpos($field,'=')) . '",';
+                if (substr($field,0,strpos($field,'='))=="images") {
+                    $images = explode(",",substr($field,1+strpos($field,'=')));
+                    $thisfield = '"images":[';
+                    foreach ($images as $img){
+                        $thisfield = $thisfield . '"' . $img . '",';
+                    }
+                    $thisfield = substr($thisfield,0,-1) . "],";
+                } else {
+                    $thisfield = '"' . substr($field,0,strpos($field,'=')) . '":"' . substr($field,1+strpos($field,'=')) . '",';
+                }
+                $json = $json . $thisfield;
             }
             $json = substr($json,0,-1) . "}";
             $pw->data = $json;
