@@ -50,5 +50,5 @@ class WebController extends Controller
         $data['subject'] = $subject;
         return view('churchsite::site.subject',$data);
     }
-    
+
 }
