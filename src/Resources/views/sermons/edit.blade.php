@@ -4,92 +4,26 @@
 @stop
 
 @section('content_header')
-    {{ Form::pgHeader('Edit blog post',route('blogs.index')) }}
+    {{ Form::pgHeader('Edit sermon',route('series.index')) }}
 @stop
 
 @section('content')
     @include('churchsite::shared.errors')
-    {!! Form::open(['route' => array('blogs.update', $blog->id), 'method' => 'put','files'=>'true']) !!}
+    {!! Form::open(['route' => array('sermons.update', $sermon->id), 'method' => 'put','files'=>'true']) !!}
     <div class="row" id="unsplash">
         <div class="col-md-12">
-            <div class="box box-primary"> 
+            <div class="box box-primary">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text" value="{{$blog->title}}">
+                        <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text" value="{{$sermon->title}}">
                     </div>
                     <div class="form-group">
-                        <label for="tags">Author</label>
-                        <select class="authortags form-control" name="author">
-                            <option></option>
-                            @foreach ($bloggers as $blogger)
-                                @if ($author == $blogger->name)
-                                    <option selected>{{$blogger->name}}</option>
-                                @else
-                                    <option>{{$blogger->name}}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                        <label for="title">Slug</label>
+                        <input class="form-control" data-slug="source" placeholder="Slug" name="slug" id="slug" type="text" value="{{$sermon->slug}}">
                     </div>
-                    <div class="form-group">
-                        <label for="publicationdate">Publication date</label>
-                        <div>
-                            <input type="text" class="form-control datetimepicker-input" id="datetimepicker" data-toggle="datetimepicker" data-target="#datetimepicker" name="publicationdate"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="tags">Subject</label>
-                        <select multiple="multiple" class="subjecttags form-control" name="tags[]">
-                            @foreach ($subjects as $subject)
-                                @if (in_array($subject->name,$subjecttags))
-                                    <option selected>{{$subject->name}}</option>
-                                @else
-                                    <option>{{$subject->name}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="image">Image</label>
-                        <div>
-                            <div v-if="chosenpic.thumbnail">
-                                <img :src="chosenpic.thumbnail">
-                                <a href="#" @click="clearme" class="btn btn-danger">&times; Remove image</a>
-                            </div>
-                            <button v-else type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal">Search unSplash</button>
-                            <input name="photographer" id="photographer" type="hidden" v-model="chosenpic.photographer">
-                            <input name="portfolio" id="portfolio" type="hidden" v-model="chosenpic.portfolio">
-                            <input name="image" id="image" type="hidden" v-model="chosenpic.image">
-                            <input name="thumbnail" id="thumbnail" type="hidden" v-model="chosenpic.thumbnail">
-                            <div id="unsplashModal" class="modal fade bd-modal" tabindex="-1" role="dialog" aria-labelledby="unSplash Modal" aria-hidden="true">
-                                <div class="modal-dialog" style="width:95%;height=95%;">
-                                    <div class="modal-content" style="width:100%;height=100%;">
-                                        <div class="modal-header text-center">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h3 class="text-center">Search for unSplash images</h3>
-                                            <input style="font-size:20px;" class="text-center" placeholder="search for image" autofocus="true" id="search" v-model="search"><a href="#" @click="searchme" class="btn btn-grey">Search</a>
-                                        </div>
-                                        <div class="container">
-                                           <div class="row">
-                                                <div v-for="pic in pics" class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-1">
-                                                    <img @click="chooseme(pic)" class="img-thumbnail img-fluid" :src="pic.urls.thumb">
-                                                </div>
-                                           </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="body">Body</label>
-                        <textarea id="summernote" name="body">{{$blog->body}}</textarea>
-                    </div>
-                </div>
                 <div class="box-footer">
-                    {{Form::pgButtons('Update',route('blogs.index')) }}
+                    {{Form::pgButtons('Update',route('series.index')) }}
                 </div>
             </div>
         </div>
@@ -119,11 +53,11 @@
                 }
             },
             mounted () {
-                if ('{{$blog->image}}' !== '') {
-                    this.chosenpic.photographer = '{{$blog->photographer}}';
-                    this.chosenpic.portfolio = '{{$blog->portfolio}}';
-                    this.chosenpic.image = '{!!$blog->image!!}';
-                    this.chosenpic.thumbnail = '{!!$blog->thumbnail!!}';
+                if ('{{$sermon->image}}' !== '') {
+                    this.chosenpic.photographer = '{{$sermon->photographer}}';
+                    this.chosenpic.portfolio = '{{$sermon->portfolio}}';
+                    this.chosenpic.image = '{!!$sermon->image!!}';
+                    this.chosenpic.thumbnail = '{!!$sermon->thumbnail!!}';
                 }
             },
             methods: {
@@ -156,7 +90,7 @@
     <script>
         $('#datetimepicker').datetimepicker({
             format: 'YYYY-MM-DD HH:mm',
-            date: '{{$blog->publicationdate}}'
+            date: '{{$sermon->publicationdate}}'
         });
         $('.authortags').select2({
             placeholder: 'Select or add author',

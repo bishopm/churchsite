@@ -13,13 +13,12 @@ Route::group(['middleware' => ['web']], function () {
 Route::group(['middleware' => ['web','auth']], function () {
     // Logout
     Route::post('logout', ['uses'=>'Bishopm\Churchsite\Http\Controllers\Auth\LoginController@logout','as'=>'logout']);
-    
+
     // Dashboard
     Route::get('admin', ['uses'=>'Bishopm\Churchsite\Http\Controllers\HomeController@admin','as'=>'dashboard']);
 
     // Blogs
     Route::get('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@index','as'=>'blogs.index']);
-    Route::get('blog/{slug}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@show','as'=>'blogs.show']);
     Route::get('admin/blogs/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@create','as'=>'blogs.create']);
     Route::get('admin/blogs/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@edit','as'=>'blogs.edit']);
     Route::post('admin/blogs', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@store','as'=>'blogs.store']);
@@ -67,7 +66,7 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::get('admin/sermons/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@show','as'=>'sermons.show']);
     Route::get('admin/sermons/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@edit','as'=>'sermons.edit']);
     Route::post('admin/sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@store','as'=>'sermons.store']);
-    Route::put('admin/sermons/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@update','as'=>'sermons.update']);    
+    Route::put('admin/sermons/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SermonsController@update','as'=>'sermons.update']);
 
     // Settings
     Route::get('admin/settings', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SettingsController@index','as'=>'settings.index']);
@@ -84,10 +83,18 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::get('admin/themes/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@edit','as'=>'themes.edit']);
     Route::post('admin/themes', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@store','as'=>'themes.store']);
     Route::put('admin/themes/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\ThemesController@update','as'=>'themes.update']);
+
+    // Videos
+    Route::get('admin/videos', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@index','as'=>'videos.index']);
+    Route::get('admin/videos/create', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@create','as'=>'videos.create']);
+    Route::get('admin/videos/{id}/edit', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@edit','as'=>'videos.edit']);
+    Route::post('admin/videos', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@store','as'=>'videos.store']);
+    Route::put('admin/videos/{id}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@update','as'=>'videos.update']);
 });
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/people/{person}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@people','as'=>'site.people']); 
-    Route::get('/subject/{subject}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@subject','as'=>'site.subject']); 
-    Route::get('/{model?}/{page?}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@show','as'=>'site.show']); 
+    Route::get('blog/{slug}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@show','as'=>'blogs.show']);
+    Route::get('/people/{person}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@people','as'=>'site.people']);
+    Route::get('/subject/{subject}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@subject','as'=>'site.subject']);
+    Route::get('/{model?}/{page?}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\WebController@show','as'=>'site.show']);
 });

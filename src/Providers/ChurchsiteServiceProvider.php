@@ -23,6 +23,7 @@ class ChurchsiteServiceProvider extends ServiceProvider
     public function boot(Dispatcher $events)
     {
         Schema::defaultStringLength(255);
+        require __DIR__.'/../Http/api.routes.php';
         require __DIR__.'/../Http/web.routes.php';
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'churchsite');
         $this->loadMigrationsFrom(__DIR__.'/../Database/migrations');
@@ -59,6 +60,11 @@ class ChurchsiteServiceProvider extends ServiceProvider
                     'text' => 'Sermons',
                     'url' => 'admin/sermons',
                     'icon' => 'microphone'
+                ],
+                [
+                    'text' => 'Videos',
+                    'url' => 'admin/videos',
+                    'icon' => 'film'
                 ]
             );
             $event->menu->add('WEBSITE STRUCTURE');
