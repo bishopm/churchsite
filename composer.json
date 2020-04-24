@@ -19,7 +19,7 @@
     "require": {
         "illuminate/support": "7.*",
         "jeroennoten/laravel-adminlte":"3.*",
-        "laravelcollective/html": "7.*",
+        "laravelcollective/html": "6.*",
         "tymon/jwt-auth": "1.*",
         "spatie/laravel-view-models": "1.*",
         "spatie/laravel-tags": "2.*",
