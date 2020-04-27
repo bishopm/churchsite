@@ -9,7 +9,6 @@ use Bishopm\Churchsite\Models\Page;
 use Bishopm\Churchsite\Models\Menuitem;
 use Illuminate\Database\Eloquent\Collection;
 use DB;
-use Menu;
 
 class MenuitemViewModel extends ViewModel
 {
@@ -18,9 +17,9 @@ class MenuitemViewModel extends ViewModel
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->indexUrl = action([MenuitemsController::class, 'index']); 
+        $this->indexUrl = action([MenuitemsController::class, 'index']);
     }
-    
+
     public function pages(): Collection
     {
         return Page::all();
@@ -74,32 +73,23 @@ class MenuitemViewModel extends ViewModel
     public function makeMenu()
     {
         $this->items=Menuitem::where('parent_id', 0)->orderBy('position', 'ASC')->get();
-        if (count($this->items)){
-            Menu::create('default', function ($menu) {
-                $menu->setPresenter(\Bishopm\Churchsite\Presenters\Bootstrap4Presenter::class);
-                foreach ($this->items as $item) {
-                    $this->children = Menuitem::where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
-                    if (!count($this->children)) {
-                        if ($item->url) {
-                            $menu->url(url('page/' . strtolower($item->url)), $item->title);
-                        } else {
-                            $menu->url('#', $item->title);
-                        }
-                    } else {
-                        $menu->dropdown($item->title, function ($sub) {
-                            foreach ($this->children as $child) {
-                                if ($child->url) {
-                                    $sub->url(url('page/' . strtolower($child->url)), $child->title);
-                                } else {
-                                    $sub->url('#', $child->title);
-                                }
-                            }
-                        });
-                    }
+        $menu="<ul class=\"navbar-nav mr-auto\">";
+        foreach ($this->items as $item) {
+            $children = Menuitem::where('parent_id', $item->id)->orderBy('position', 'ASC')->get();
+            if (count($children)) {
+                $menu = $menu . "<li class=\"nav-item dropdown\">";
+                $menu = $menu . "<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">{$item->title}</a>";
+                $menu = $menu . "<div class=\"dropdown-menu\">";
+                foreach ($children as $child) {
+                    $menu = $menu . "<a class=\"dropdown-item\" href=\"{$child->url}\">{$child->title}</a>";
+                    // Still need provision for grandchildren
                 }
-            });
-            return Menu::get('default');
+                $menu = $menu . "</div></li>";
+            } else {
+                $menu = $menu . "<li class=\"nav-item\"><a class=\"nav-link\" href=\"" . url('/') . "/{$item->url}\">{$item->title}</a></li>";
+            }
         }
+        return $menu . "</ul>";
     }
 
     public function makeFooter()
