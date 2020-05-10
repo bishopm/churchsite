@@ -10,14 +10,14 @@
 		<div class="row">
 			<div class="col-md-6">
 				<h3>{{$event->groupname}}
-				@include('churchsite::shared.errors') 
+				@include('churchsite::shared.errors')
 				@if (Auth::check())
 					<a href="{{url('/')}}/event/{{$event->slug}}/sign-up" class="btn btn-primary btn-xs">Sign me up!</a>
 				@endif
 				</h3>
 				<h4>{{date("d M Y H:i",$event->eventdatetime)}}</h4>
 				@if ($event->image)
-					<img class="pull-right" src="{{url('/')}}/storage/events/{{$event->image}}">
+					<img class="float-right" src="{{url('/')}}/storage/events/{{$event->image}}">
 				@endif
 				{{$event->description}}
 			</div>

@@ -11,7 +11,7 @@ use Spatie\Tags\Tag;
 class WebController extends Controller
 {
 
-    public function show($model='page',$page=null) {
+    public function show($page=null) {
         if ($page) {
             $page = Page::where('slug',$page)->with('pagewidgets')->first();
         } else {

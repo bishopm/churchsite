@@ -3,14 +3,14 @@
 @section('title','Books by the same author')
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 @stop
 
-@section('content')  
+@section('plugins.Datatables', true)
+@section('content')
     <div class="container">
       <h3>{{$author}}</h3>
         <div class="row">
-            <table id="bTable" class="table table-striped table-hover table-condensed table-responsive" width="100%" cellspacing="0">
+            <table id="bTable" class="table table-striped" style="width:100%" cellspacing="0">
               <thead>
                   <tr>
                       <th></th><th>Book</th><th>Copies</th><th>Average rating (1-5)</th>
@@ -45,8 +45,6 @@
 @stop
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script language="javascript">
 $(document).ready(function() {
     $('#bTable').DataTable();

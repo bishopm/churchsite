@@ -5,7 +5,7 @@
 @stop
 
 @section('content_header')
-    {{ Form::pgHeader('Edit video',route('videos.index')) }}
+    {{ Form::pgHeader('Edit video','All videos',route('videos.index')) }}
 @stop
 
 @section('content')
@@ -44,13 +44,13 @@
 @stop
 
 @section('js')
-    <link href="{{asset('vendor/bishopm/summernote.css')}}" rel="stylesheet">
-    <script src="{{asset('vendor/bishopm/js/moment.min.js')}}"></script>
-    <script src="{{asset('vendor/bishopm/js/datetimepicker.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <script>
         $('#datetimepicker').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
-            date: '{{$video->broadcasttime}}'
+            date: '{{date('Y-m-d H:i:s',$video->broadcasttime)}}'
         });
     </script>
 @stop

@@ -7,10 +7,11 @@
     {{ Form::pgHeader('Edit menuitem','Menuitems',route('menuitems.index')) }}
 @stop
 
+@section('plugins.Select2', true)
 @section('content')
     @include('churchsite::shared.errors')
     {!! Form::open(['route' => array('menuitems.update',$menuitem->id), 'method' => 'put']) !!}
-    <div class="box box-primary"> 
+    <div class="box box-primary">
         <div class="box-body">
             {{ Form::bsText('title','Menu item','Menu item',$menuitem->title) }}
             <div class="form-group">

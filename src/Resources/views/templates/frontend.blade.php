@@ -5,7 +5,7 @@
 @endif
 
 @section('css')
-
+    @yield('css')
 @stop
 
 @section('content')
@@ -13,5 +13,5 @@
 @stop
 
 @section('js')
-	
+    @yield('js')
 @stop

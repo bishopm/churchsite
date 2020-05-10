@@ -7,6 +7,7 @@
     {{ Form::pgHeader('Edit sermon',route('series.index')) }}
 @stop
 
+@section('plugins.Select2', true)
 @section('content')
     @include('churchsite::shared.errors')
     {!! Form::open(['route' => array('sermons.update', $sermon->id), 'method' => 'put','files'=>'true']) !!}

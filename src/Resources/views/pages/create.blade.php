@@ -7,12 +7,13 @@
     {{ Form::pgHeader('New page',route('pages.index')) }}
 @stop
 
+@section('plugins.Select2', true)
 @section('content')
     @include('churchsite::shared.errors')
     {!! Form::open(['route' => array('pages.store'), 'method' => 'post','files'=>'true']) !!}
     <div class="row" id="unsplash">
         <div class="col-md-12">
-            <div class="box box-primary"> 
+            <div class="box box-primary">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="title">Page title</label>

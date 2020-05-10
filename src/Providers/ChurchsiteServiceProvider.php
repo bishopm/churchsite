@@ -44,7 +44,8 @@ class ChurchsiteServiceProvider extends ServiceProvider
         config(['jwt.ttl' => 525600]);
         config(['jwt.refresh_ttl' => 525600]);
         config(['auth.providers.users.model'=>'Bishopm\Churchsite\Models\User']);
-        config(['adminlte.skin' => 'blue']);
+        config(['adminlte.title' => 'Umhlali Methodist Church']);
+        config(['adminlte.logo' => '<b>Umhlali</b>Methodist']);
         config(['adminlte.menu' => []]);
         config(['adminlte.dashboard_url' => 'admin']);
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
@@ -54,17 +55,17 @@ class ChurchsiteServiceProvider extends ServiceProvider
                 [
                     'text' => 'Blog',
                     'url' => 'admin/blogs',
-                    'icon' => 'pencil-square-o'
+                    'icon' => 'fas fa-fw fa-pen'
                 ],
                 [
                     'text' => 'Sermons',
                     'url' => 'admin/sermons',
-                    'icon' => 'microphone'
+                    'icon' => 'fas fa-fw fa-microphone'
                 ],
                 [
                     'text' => 'Videos',
                     'url' => 'admin/videos',
-                    'icon' => 'film'
+                    'icon' => 'fas fa-fw fa-film'
                 ]
             );
             $event->menu->add('WEBSITE STRUCTURE');
@@ -72,27 +73,27 @@ class ChurchsiteServiceProvider extends ServiceProvider
                 [
                     'text' => 'Menus',
                     'url' => 'admin/menu',
-                    'icon' => 'list'
+                    'icon' => 'fas fa-fw fa-list'
                 ],
                 [
                     'text' => 'Pages',
                     'url' => 'admin/pages',
-                    'icon' => 'file'
+                    'icon' => 'fas fa-fw fa-file'
                 ],
                 [
                     'text' => 'Themes',
                     'url' => 'admin/themes',
-                    'icon' => 'paint-brush'
+                    'icon' => 'fas fa-fw fa-paint-brush'
                 ],
                 [
                     'text' => 'Settings',
                     'url' => 'admin/settings',
-                    'icon' => 'cog'
+                    'icon' => 'fas fa-fw fa-cog'
                 ],
                 [
                     'text' => 'View website',
                     'url' => '/',
-                    'icon' => 'globe',
+                    'icon' => 'fas fa-fw fa-globe',
                     'target' => '_blank',
                     'active' => []
                 ]

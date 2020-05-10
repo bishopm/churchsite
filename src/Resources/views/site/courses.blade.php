@@ -3,13 +3,13 @@
 @section('title','Courses at ' . $setting['site_abbreviation'])
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 @stop
 
+@section('plugins.Datatables', true)
 @section('content')
 <div class="container">
 <h1>{{$setting['site_abbreviation']}} Courses</h1>
-  @include('churchsite::shared.errors') 
+  @include('churchsite::shared.errors')
   <ul class="nav nav-pills" role="tablist">
     <li role="presentation"><a href="#courses" aria-controls="courses" role="tab" data-toggle="tab" class="nav-link active">Courses</a></li>
     <li role="presentation"><a href="#homegroups" aria-controls="homegroups" role="tab" data-toggle="tab" class="nav-link">Home group materials</a></li>
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="homegroups"><br>
-        <table id="hgTable" class="table table-striped table-hover table-condensed table-responsive" width="100%" cellspacing="0">
+        <table id="hgTable" class="table table-striped" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th></th><th>Course</th><th>Description</th><th>Average rating (1-5)</th><th>Comments</th>
@@ -84,8 +84,6 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script language="javascript">
 $(document).ready(function() {
     $('#cTable').DataTable();

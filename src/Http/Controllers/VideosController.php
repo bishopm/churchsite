@@ -7,6 +7,7 @@ use Bishopm\Churchsite\Models\Video;
 use Bishopm\Churchsite\Http\ViewModels\VideoViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Bishopm\Churchsite\Models\Setting;
 use DB;
 use Auth;
 
@@ -55,27 +56,23 @@ class VideosController extends Controller
             ->withSuccess('Video post updated');
     }
 
-    public function destroy()
+    public function jitsi()
     {
-
+        $setting = Setting::where('setting_key', 'meeting_room_name')->first();
+        return view('churchsite::site.jitsi', compact('setting'));
     }
 
-    public function liveapp()
+    public function live()
     {
         $now=time();
-        $videos = Video::where('broadcasttime','>=',$now - 60 * 24)->orderBy('broadcasttime','ASC')->get();
-        foreach ($videos as $video) {
+        $videos = array();
+        $data=Video::all();
+        $data = Video::where('broadcasttime','>=',$now - 60 * 24)->orderBy('broadcasttime','ASC')->get();
+        foreach ($data as $video) {
             $video->readable = date('Y-m-d H:i:s',$video->broadcasttime);
-            if ($video->broadcasttime + $video->duration < $now) {
-                $video->status = "COMPLETED";
-            } elseif ($video->broadcasttime < $now) {
-                $video->status = "LIVE";
-            } else {
-                $video->status = "PENDING";
-            }
-            $video->broadcasttime = $video->broadcasttime * 1000;
-            $data[] = $video;
+            //$video->broadcasttime = $video->broadcasttime * 1000;
+            $videos[] = $video;
         }
-        return $data;
+        return view('churchsite::site.live', compact('videos'));
     }
 }

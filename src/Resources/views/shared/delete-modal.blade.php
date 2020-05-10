@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline btn-flat" data-dismiss="modal">Cancel</button>
-                {!! Form::open(['method' => 'delete', 'class' => 'pull-left']) !!}
+                {!! Form::open(['method' => 'delete', 'class' => 'float-left']) !!}
                 <button type="submit" class="btn btn-outline btn-flat"><i class="fa fa-trash"></i>Delete</button>
                 {!! Form::close() !!}
             </div>

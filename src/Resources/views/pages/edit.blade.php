@@ -30,6 +30,7 @@ header a, header a:hover { color: #fff; }
     {{ Form::pgHeader('Edit page',route('pages.index')) }}
 @stop
 
+@section('plugins.Select2', true)
 @section('content')
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
@@ -45,7 +46,7 @@ header a, header a:hover { color: #fff; }
             {!! Form::open(['route' => array('pages.update', $page->id), 'method' => 'put','files'=>'true']) !!}
             <div class="row" id="unsplash">
                 <div class="col-md-12">
-                    <div class="box box-primary"> 
+                    <div class="box box-primary">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="title">Page name</label>
@@ -77,7 +78,7 @@ header a, header a:hover { color: #fff; }
             {!! Form::close() !!}
         </div>
         <div class="tab-pane" id="layout" role="tabpanel">
-            <div class="text-center"><h4>Add, delete, move or resize widgets <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#widget-modal">Add widget</button></h4>
+            <div class="text-center"><h4>Add, delete, move or resize widgets <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#widget-modal">Add widget</button></h4>
             @forelse ($widgets as $zone=>$zones)
                 <br>
                 <div class="text-center bg-black">
@@ -115,7 +116,7 @@ header a, header a:hover { color: #fff; }
                         <div class="col-md-4 text-bold">
                             Zone
                         </div>
-                        <div class="col-md-8">            
+                        <div class="col-md-8">
                             <select id="newzone" class="form-control" name="newzone">
                                 <option value="1header">Header</option>
                                 <option selected value="2body">Body</option>
@@ -124,7 +125,7 @@ header a, header a:hover { color: #fff; }
                         </div>
                     </div>
                     <div class="row" id="buttonrow" style="padding-top:10px;">
-                        <div class="col-md-offset-4 col-md-8">            
+                        <div class="col-md-offset-4 col-md-8">
                             <button onclick="addWidget()" data-dismiss="modal" class="form-control btn btn-primary">Add widget to page</button>
                         </div>
                     </div>
@@ -188,19 +189,19 @@ header a, header a:hover { color: #fff; }
         var headerData = {!!json_encode($widgets['1header'])!!};
         var headerGrid = $('#grid-stack-1header').data('gridstack');
         for (var hndx in headerData) {
-            headerGrid.addWidget($('<div><div class="grid-stack-item-content"><small>' + headerData[hndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + headerData[hndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + headerData[hndx].id + ')" class="btn btn-primary btn-xs pull-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
+            headerGrid.addWidget($('<div><div class="grid-stack-item-content"><small>' + headerData[hndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + headerData[hndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + headerData[hndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
                 headerData[hndx].col, headerData[hndx].row, headerData[hndx].width, 80, false, 1, 12, 1, 1, headerData[hndx].id);
         }
         var bodyData = {!!json_encode($widgets['2body'])!!};
         var bodyGrid = $('#grid-stack-2body').data('gridstack');
         for (var bndx in bodyData) {
-            bodyGrid.addWidget($('<div><div id="widget-' + bodyData[bndx].id + '" class="grid-stack-item-content"><small>' + bodyData[bndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + bodyData[bndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + bodyData[bndx].id + ')" class="btn btn-primary btn-xs pull-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
+            bodyGrid.addWidget($('<div><div id="widget-' + bodyData[bndx].id + '" class="grid-stack-item-content"><small>' + bodyData[bndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + bodyData[bndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + bodyData[bndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
                 bodyData[bndx].col, bodyData[bndx].row, bodyData[bndx].width, 80, false, 1, 12, 1, 1, bodyData[bndx].id);
         }
         var footerData = {!!json_encode($widgets['3footer'])!!};
         var footerGrid = $('#grid-stack-3footer').data('gridstack');
         for (var fndx in footerData) {
-            footerGrid.addWidget($('<div><div id="widget-' + footerData[fndx].id + '" class="grid-stack-item-content"><small>' + footerData[fndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + footerData[hndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + footerData[fndx].id + ')" class="btn btn-primary btn-xs pull-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
+            footerGrid.addWidget($('<div><div id="widget-' + footerData[fndx].id + '" class="grid-stack-item-content"><small>' + footerData[fndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + footerData[hndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + footerData[fndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
                 footerData[fndx].col, footerData[fndx].row, footerData[fndx].width, 80, false, 1, 12, 1, 1, footerData[fndx].id);
         }
         $('.grid-stack').on('change', function(event, items) {
@@ -235,7 +236,7 @@ header a, header a:hover { color: #fff; }
             }
         }).then(response => {
             var grid = $('#grid-stack-' + response.zone).data('gridstack');
-            grid.addWidget($('<div><div class="grid-stack-item-content"><small>' + response.widget.label + '<a href="#" onclick="deleteWidget(' + response.id + ')" class="btn btn-primary btn-xs pull-right">X</a></small></div></div>'),
+            grid.addWidget($('<div><div class="grid-stack-item-content"><small>' + response.widget.label + '<a href="#" onclick="deleteWidget(' + response.id + ')" class="btn btn-primary btn-xs float-right">X</a></small></div></div>'),
                     response.col, response.row, response.width, 80, false, 1, 12, 1, 1, response.id);
         });
     }
@@ -273,7 +274,7 @@ header a, header a:hover { color: #fff; }
                         sbox = sbox + '<input id="' + index +'" class="form-control" name="' + index +'" value="' + value + '"></div></div>';
                     }
                 });
-                sbox = sbox + '<div class="row"><div class="col-md-offset-3 col-md-9" style="margin-top:15px;"><a href="#" onclick="updateSettings(' + id + ')" class="btn btn-primary pull-right" data-dismiss="modal">Update</a></div></div></form>';
+                sbox = sbox + '<div class="row"><div class="col-md-offset-3 col-md-9" style="margin-top:15px;"><a href="#" onclick="updateSettings(' + id + ')" class="btn btn-primary float-right" data-dismiss="modal">Update</a></div></div></form>';
             }
             $('#settings').html(sbox);
         });

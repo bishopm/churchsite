@@ -3,14 +3,14 @@
 @section('title','Blog')
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 @stop
 
+@section('plugins.Datatables', true)
 @section('content')
 <div class="container">
 	<div class="row">
 	  <div class="col-md-12">
-		  <h3>{{$setting['site_abbreviation']}} blog</h3>  
+		  <h3>{{$setting['site_abbreviation']}} blog</h3>
 	  	  <table id="seriesTable" class="table table-responsive table-striped">
 	  	  	  <thead>
 	  	  	  	<tr><th>Date</th><th>Title</th><th>Author</th><th>Comments</th></tr>
@@ -32,8 +32,6 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script language="javascript">
   $(document).ready(function() {
     $('#seriesTable').DataTable( {

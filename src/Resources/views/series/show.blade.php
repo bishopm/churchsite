@@ -1,7 +1,7 @@
 @extends('churchsite::page')
 
 @section('css')
-    @parent    
+    @parent
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-md-6"><h4>{{$series->title}}</h4><small>{{$series->startdate}}</small></div>
-                            <div class="col-md-6"><a href="{{route('series.edit',$series->id)}}" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit series</a></div>
+                            <div class="col-md-6"><a href="{{route('series.edit',$series->id)}}" class="btn btn-primary float-right"><i class="fa fa-pencil"></i> Edit series</a></div>
                         </div>
                     </div>
                     <div class="panel-body">

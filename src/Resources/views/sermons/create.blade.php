@@ -7,12 +7,13 @@
     {{ Form::pgHeader('New sermon',route('sermons.show',$series)) }}
 @stop
 
+@section('plugins.Select2', true)
 @section('content')
     @include('churchsite::shared.errors')
     {!! Form::open(['route' => 'sermons.store', 'method' => 'post','files'=>'true']) !!}
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-primary"> 
+            <div class="box box-primary">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="title">Title</label>

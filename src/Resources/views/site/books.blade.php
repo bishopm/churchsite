@@ -3,13 +3,13 @@
 @section('title','Browse our bookshop')
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 @stop
 
+@section('plugins.Datatables', true)
 @section('content')
 <div class="container">
     <div class="top30">
-        @include('churchsite::shared.errors') 
+        @include('churchsite::shared.errors')
         <h1>Explore our bookshop</h1>
         <div class="table-responsive mt-3">
             <table id="bTable" class="table table-striped table-hover table-condensed" width="100%" cellspacing="0">
@@ -49,8 +49,6 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script language="javascript">
 $(document).ready(function() {
     $('#bTable').DataTable( {

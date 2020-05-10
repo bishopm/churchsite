@@ -7,12 +7,13 @@
     {{ Form::pgHeader('Add menu item','Menuitems',route('menuitems.index')) }}
 @stop
 
+@section('plugins.Select2', true)
 @section('content')
     @include('churchsite::shared.errors')
     {!! Form::open(['route' => array('menuitems.store'), 'method' => 'post']) !!}
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-primary"> 
+            <div class="box box-primary">
                 <div class="box-body">
                     {{ Form::bsText('title','Menu item','Menu item') }}
                     <div class="form-group">

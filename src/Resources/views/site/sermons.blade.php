@@ -3,14 +3,14 @@
 @section('title','Sermons at ' . $setting['site_abbreviation'])
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 @stop
 
+@section('plugins.Datatables', true)
 @section('content')
 <div class="container">
 	<div class="row mt-3">
 	  <div class="col-md-12">
-			<h3>{{$setting['site_abbreviation']}} preaching series</h3>  
+			<h3>{{$setting['site_abbreviation']}} preaching series</h3>
 			<div class="table-responsive mt-3">
 	  	  <table id="seriesTable" class="table table-striped">
 					<thead>
@@ -29,8 +29,6 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script language="javascript">
   $(document).ready(function() {
     $('#seriesTable').DataTable( {
