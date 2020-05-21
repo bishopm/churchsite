@@ -18,16 +18,15 @@
 
 @section('content')
     <div id="q-app">
-        @forelse ($videos as $video)
-            <div style="position: relative;width: 100%;height: 0;padding-bottom: 56.25%;">
-                <span>{{$video->status}}: {{$video->title}}  ({{$video->readable}}) {{$video->message}}</span>
-                <iframe src="https://www.youtube-nocookie.com/embed/{{$video->url}}?&modestbranding=1&playsinline=1&showinfo=0&rel=0&start=0"
-                    frameborder="0" style="position: absolute;top: 20;left: 0;width: 100%;height: 100%;">
-                </iframe>
-            </div>
-        @empty
-            There are no live events at present
-        @endforelse
+        <div v-if="live.url" style="position: relative;width: 100%;height: 0;padding-bottom: 56.25%;" :title="timenow">
+            <iframe :src="'https://www.youtube-nocookie.com/embed/' + live.url + '?&modestbranding=1&playsinline=1&showinfo=0&rel=0&autoplay=true&start=' + late"
+                frameborder="0" style="position:absolute;top: 20;left: 0;width: 100%;height: 100%;pointer-events: none;">
+            </iframe>
+        </div>
+        <div v-else :title="timenow">
+            <br>
+            <div v-if="pending[0]" v-html="'<h4>' + pending[0].message + '</h4>'"></div>
+        </div>
     </div>
 @stop
 
@@ -37,30 +36,29 @@
 var vm1 = new Vue({
     el: '#q-app',
     data: {
-        intervalHandle: null,
-        events: [],
-        timenow: {}
+        interval: null,
+        videos: [],
+        completed: [],
+        pending: [],
+        live: {},
+        timenow: null,
+        late: 0,
+        offset: null
     },
     mounted() {
-        this.events = <?php echo json_encode($videos);?>;
-        this.intervalHandle = setInterval(() => {
-        for (var endx in this.events) {
-            this.events[endx].timetogo = (Date.now()/1000) - this.events[endx].broadcasttime;
-            if (this.events[endx].timetogo > 0) {
-                this.events[endx].status = 'PENDING';
-                this.events[endx].message = 'We are live in: ' + this.convertsec(this.events[endx].timetogo);
-            } else if (this.events[endx].timetogo < -60 * this.events[endx].duration) {
-                this.events[endx].status = 'COMPLETED';
-                this.events[endx].message = 'Broadcast ended: ' + this.convertsec(-1 * this.events[endx].timetogo) + ' ago';
+        this.offset = new Date().getTimezoneOffset() * 60;
+        this.videos = <?php echo json_encode($videos);?>;
+        this.timenow = Math.floor(new Date()/1000 - this.offset);
+        for (var vndx in this.videos) {
+            if (this.timenow >= (this.videos[vndx].duration * 60) + this.videos[vndx].broadcasttime) {
+                this.completed.push(this.videos[vndx]);
+            } else if (this.timenow < this.videos[vndx].broadcasttime) {
+                this.pending.push(this.videos[vndx]);
             } else {
-                this.events[endx].status = 'LIVE';
-                this.late = -1 * this.events[endx].timetogo;
-                this.events[endx].timetogo = this.convertsec(this.late);
-                this.events[endx].message = '';
-                this.startvideo = true;
+                this.live = this.videos[vndx];
             }
         }
-        }, 1000);
+        this.interval = setInterval(this.checktime, 1000);
     },
     methods: {
         convertsec (timetogo) {
@@ -73,6 +71,28 @@ var vm1 = new Vue({
             var mDisplay = m > 0 ? m + (m === 1 ? ' minute ' : ' minutes ') : '';
             var sDisplay = s > 0 ? s + (s === 1 ? ' second' : ' seconds') : '';
             return dDisplay + hDisplay + mDisplay + sDisplay;
+        },
+        checktime () {
+            this.timenow = Math.floor(new Date()/1000 - this.offset);
+            if (this.live.broadcasttime) {
+                if (this.timenow >= this.live.broadcasttime + (60 * this.live.duration)) {
+                    this.completed.push(this.live);
+                    this.live = {};
+                } else {
+                    if (this.late === 0) {
+                        this.late = this.timenow - this.live.broadcasttime;
+                    }
+                    this.live.message = 'Welcome! We started ' + this.convertsec(this.timenow - this.live.broadcasttime) + ' ago';
+                }
+            }
+            for (var pndx in this.pending) {
+                this.pending[pndx].message = 'Welcome! We\'re starting in<br>' + this.convertsec(this.pending[pndx].broadcasttime - this.timenow);
+                if (this.timenow >= this.pending[pndx].broadcasttime) {
+                    this.live = this.pending[pndx];
+                    this.pending.splice(pndx, 1);
+                    this.late = 0;
+                }
+            }
         }
     }
 });

@@ -65,14 +65,7 @@ class VideosController extends Controller
     public function live()
     {
         $now=time();
-        $videos = array();
-        $data=Video::all();
-        $data = Video::where('broadcasttime','>=',$now - 60 * 24)->orderBy('broadcasttime','ASC')->get();
-        foreach ($data as $video) {
-            $video->readable = date('Y-m-d H:i:s',$video->broadcasttime);
-            //$video->broadcasttime = $video->broadcasttime * 1000;
-            $videos[] = $video;
-        }
-        return view('churchsite::site.live', compact('videos'));
+        $data['videos'] = Video::where('broadcasttime','>=',$now - 3600 * 24)->orderBy('broadcasttime','ASC')->get();
+        return view('churchsite::site.live', $data);
     }
 }
