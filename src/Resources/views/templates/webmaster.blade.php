@@ -11,8 +11,7 @@
   <title>{{$settings['site_name']}}</title>
   @yield('css')
   <!-- Bootstrap core CSS -->
-  <link href="{{ asset('vendor/bishopm/css/bootstrap4.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <style>
     a.footerlink, a.footerlink:hover {
       color: {{$settings['footer_menu_item_colour']}};
@@ -44,7 +43,7 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-{{$settings['menubar']}} bg-theme static-top">
-    <div class="container">
+    <div class="container-fluid">
       <a class="navbar-brand" href="{{url('/')}}">{!!$settings['site_logo']!!}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -80,7 +79,7 @@
 
   <!-- Page Content -->
   <div>
-    <div class="container pb-3">
+    <div class="container-fluid pb-3">
       <div class="row">
         <div class="col-lg-12 text-center">
           @yield('content')
@@ -107,9 +106,9 @@
   </div>
   <!-- Bootstrap core JavaScript -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
   @yield('js')
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>

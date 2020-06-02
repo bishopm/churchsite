@@ -11,11 +11,10 @@
     background-color: #367fa8;
 }
 
-.grid-stack-item-content .fa {
-    font-size: 64px;
-    display: block;
-    margin: 20px 0 10px;
+.btn-primary {
+    background-color: #367fa8;
 }
+
 
 header a, header a:hover { color: #fff; }
 
@@ -33,11 +32,11 @@ header a, header a:hover { color: #fff; }
 @section('plugins.Select2', true)
 @section('content')
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-            <a class="active" href="#content" role="tab" data-toggle="tab">Page content</a>
+        <li class="nav-item active">
+            <a class="nav-link active" href="#content" role="tab" data-toggle="tab">Page content</a>
         </li>
-        <li>
-            <a href="#layout" role="tab" data-toggle="tab">Page layout</a>
+        <li class="nav-item">
+            <a class="nav-link" href="#layout" role="tab" data-toggle="tab">Page layout</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -137,8 +136,8 @@ header a, header a:hover { color: #fff; }
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Widget settings</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div id="settings" class="modal-body">
                 </div>
@@ -189,19 +188,19 @@ header a, header a:hover { color: #fff; }
         var headerData = {!!json_encode($widgets['1header'])!!};
         var headerGrid = $('#grid-stack-1header').data('gridstack');
         for (var hndx in headerData) {
-            headerGrid.addWidget($('<div><div class="grid-stack-item-content"><small>' + headerData[hndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + headerData[hndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + headerData[hndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
+            headerGrid.addWidget($('<div><div class="grid-stack-item-content"><small>' + headerData[hndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + headerData[hndx].id + ')"><i class="fa fa-cog"></i></a> <a href="#" onclick="deleteWidget(' + headerData[hndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="fa fa-times"></i></a></small></div></div>'),
                 headerData[hndx].col, headerData[hndx].row, headerData[hndx].width, 80, false, 1, 12, 1, 1, headerData[hndx].id);
         }
         var bodyData = {!!json_encode($widgets['2body'])!!};
         var bodyGrid = $('#grid-stack-2body').data('gridstack');
         for (var bndx in bodyData) {
-            bodyGrid.addWidget($('<div><div id="widget-' + bodyData[bndx].id + '" class="grid-stack-item-content"><small>' + bodyData[bndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + bodyData[bndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + bodyData[bndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
+            bodyGrid.addWidget($('<div><div id="widget-' + bodyData[bndx].id + '" class="grid-stack-item-content"><small>' + bodyData[bndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + bodyData[bndx].id + ')"><i class="fa fa-cog"></i></a> <a href="#" onclick="deleteWidget(' + bodyData[bndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="fa fa-times"></i></a></small></div></div>'),
                 bodyData[bndx].col, bodyData[bndx].row, bodyData[bndx].width, 80, false, 1, 12, 1, 1, bodyData[bndx].id);
         }
         var footerData = {!!json_encode($widgets['3footer'])!!};
         var footerGrid = $('#grid-stack-3footer').data('gridstack');
         for (var fndx in footerData) {
-            footerGrid.addWidget($('<div><div id="widget-' + footerData[fndx].id + '" class="grid-stack-item-content"><small>' + footerData[fndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + footerData[hndx].id + ')"><i class="glyphicon glyphicon-cog"></i></a> <a href="#" onclick="deleteWidget(' + footerData[fndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="glyphicon glyphicon-remove"></i></a></small></div></div>'),
+            footerGrid.addWidget($('<div><div id="widget-' + footerData[fndx].id + '" class="grid-stack-item-content"><small>' + footerData[fndx].widget.label + ' <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#settings-modal" href="#" onclick="editSettings(' + footerData[hndx].id + ')"><i class="fa fa-cog"></i></a> <a href="#" onclick="deleteWidget(' + footerData[fndx].id + ')" class="btn btn-primary btn-xs float-right"><i class="fa fa-times"></i></a></small></div></div>'),
                 footerData[fndx].col, footerData[fndx].row, footerData[fndx].width, 80, false, 1, 12, 1, 1, footerData[fndx].id);
         }
         $('.grid-stack').on('change', function(event, items) {

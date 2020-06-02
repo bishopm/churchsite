@@ -5,9 +5,11 @@
 
 @section('content')
     @if (isset($header))
-        @foreach ($header as $widget)
-            @include('churchsite::widgets.' . $widget['widget']['widget'])
-        @endforeach
+        <div class="row">
+            @foreach ($header as $widget)
+                @include('churchsite::widgets.' . $widget['widget']['widget'])
+            @endforeach
+        </div>
     @endif
     @if (isset($body))
         <div class="row mt-4">
