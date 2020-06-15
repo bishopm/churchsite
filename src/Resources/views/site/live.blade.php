@@ -27,6 +27,19 @@
             <br>
             <div v-if="pending[0]" v-html="'<h4>' + pending[0].message + '</h4>'"></div>
         </div>
+        @if(isset($lastvideo))
+        <div v-if="lastvideo.timeago" style="position: relative;width: 100%;height: 0;padding-bottom: 56.25%;">
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                This broadcast ended {{$lastvideo->timeago}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <iframe :src="'https://www.youtube-nocookie.com/embed/' + lastvideo.url + '?&modestbranding=1&playsinline=1&showinfo=0&rel=0'"
+                frameborder="0" style="position:absolute;top: 20;left: 0;width: 100%;height: 100%;">
+            </iframe>
+        </div>
+        @endif
     </div>
 @stop
 
@@ -38,6 +51,7 @@ var vm1 = new Vue({
     data: {
         interval: null,
         videos: [],
+        lastvideo: {},
         completed: [],
         pending: [],
         live: {},
@@ -49,6 +63,9 @@ var vm1 = new Vue({
         this.offset = new Date().getTimezoneOffset() * 60;
         this.videos = <?php echo json_encode($videos);?>;
         this.timenow = Math.floor(new Date()/1000 - this.offset);
+        if (!this.videos.length) {
+            this.lastvideo = <?php echo json_encode($lastvideo);?>;
+        }
         for (var vndx in this.videos) {
             if (this.timenow >= (this.videos[vndx].duration * 60) + this.videos[vndx].broadcasttime) {
                 this.completed.push(this.videos[vndx]);
@@ -96,5 +113,16 @@ var vm1 = new Vue({
         }
     }
 });
+@if($lastvideo)
+$(document).ready(function () {
+ 
+ window.setTimeout(function() {
+     $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+         $(this).remove(); 
+     });
+ }, 2500);
+  
+ });
 </script>
+@endif
 @stop

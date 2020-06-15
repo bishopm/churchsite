@@ -4,13 +4,13 @@
 @stop
 
 @section('content_header')
-    {{ Form::pgHeader('Edit sermon',route('series.index')) }}
+    {{ Form::pgHeader('Edit sermon','Series sermons', route('series.show', [$sermon->series_id])) }}
 @stop
 
 @section('plugins.Select2', true)
 @section('content')
     @include('churchsite::shared.errors')
-    {!! Form::open(['route' => array('sermons.update', $sermon->id), 'method' => 'put','files'=>'true']) !!}
+    {!! Form::open(['route' => array('sermons.update', [$sermon->id]), 'method' => 'put','files'=>'true']) !!}
     <div class="row" id="unsplash">
         <div class="col-md-12">
             <div class="box box-primary">
@@ -20,11 +20,52 @@
                         <input class="form-control" data-slug="source" placeholder="Title" name="title" id="title" type="text" value="{{$sermon->title}}">
                     </div>
                     <div class="form-group">
-                        <label for="title">Slug</label>
-                        <input class="form-control" data-slug="source" placeholder="Slug" name="slug" id="slug" type="text" value="{{$sermon->slug}}">
+                        <label for="tags">Preacher</label>
+                        <select class="preachertags form-control" name="preacher">
+                            <option></option>
+                            @foreach ($preachers as $preach)
+                                @if ($preacher == $preach->name)
+                                    <option selected>{{$preach->name}}</option>
+                                @else
+                                    <option>{{$preach->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="servicedate">Service date</label>
+                        <div>
+                            <input type="text" class="form-control datetimepicker-input" id="datetimepicker" data-toggle="datetimepicker" data-target="#datetimepicker" name="servicedate"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="readings">Readings</label>
+                        <input class="form-control" data-slug="source" placeholder="Readings" name="readings" id="readings" type="text" value="{{$sermon->readings}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="mp3">Mp3 file [{{$sermon->mp3}}]</label>
+                        <input class="form-control" placeholder="MP3" name="mp3" id="mp3" type="file">
+                    </div>
+                    <div class="form-group">
+                        <label for="mp3">Video</label>
+                        <input class="form-control" placeholder="Video url" name="video" id="video" type="text" value="{{$sermon->video}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" name="status">
+                            @if ($sermon->status == "Draft")
+                                <option selected>Draft</option>
+                                <option>Published</option>
+                            @else
+                                <option>Draft</option>
+                                <option selected>Published</option>
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" name="series_id" value="{{$series}}">
                 <div class="box-footer">
-                    {{Form::pgButtons('Update',route('series.index')) }}
+                    {{Form::pgButtons('Update',route('series.index',$sermon->id)) }}
                 </div>
             </div>
         </div>
@@ -90,8 +131,8 @@
     </script>
     <script>
         $('#datetimepicker').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm',
-            date: '{{$sermon->publicationdate}}'
+            format: 'YYYY-MM-DD',
+            date: '{{$sermon->servicedate}}'
         });
         $('.authortags').select2({
             placeholder: 'Select or add author',

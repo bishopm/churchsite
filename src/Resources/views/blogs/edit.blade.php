@@ -4,7 +4,7 @@
 @stop
 
 @section('content_header')
-    {{ Form::pgHeader('Edit blog post',route('blogs.index')) }}
+    {{ Form::pgHeader('Edit blog post','All blog posts', route('blogs.index')) }}
 @stop
 
 @section('plugins.Select2', true)

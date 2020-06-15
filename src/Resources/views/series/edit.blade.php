@@ -26,7 +26,12 @@
                     </div>
                     <div class="form-group">
                         @if ($series->image)
-                            <img width="250px" src="{{url('/')}}/storage/sermons/{{$series->image}}">
+                            @if (file_exists(storage_path() . "/sermons/" . $series->image))
+                                <img width="250px" src="{{url('/')}}/storage/sermons/{{$series->image}}">
+                            @else
+                                {{$series->image}} has been renamed or doesn't exist any more.<br>Please upload a new image:
+                                <input type="file" name="seriesimage">
+                            @endif
                         @else
                             <label for="fileimage">Image</label>
                             <input type="file" name="seriesimage">

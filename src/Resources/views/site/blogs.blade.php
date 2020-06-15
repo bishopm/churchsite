@@ -16,13 +16,13 @@
 	  	  	  	<tr><th>Date</th><th>Title</th><th>Author</th><th>Comments</th></tr>
 	  	  	  </thead>
 	  	  	  <tbody>
-			      @foreach ($blogs as $blog)
-			      	  <tr>
-									<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{date("Y-m-d",strtotime($blog->created_at))}}</a></td>
-									<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{$blog->title}}</a></td>
-									<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{$blog->individual->firstname}} {{$blog->individual->surname}}</a></td>
-									<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{count($blog->comments)}}</a></td>
-								</tr>
+			      	@foreach ($blogs as $blog)
+			      		<tr>
+							<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{date("Y-m-d",strtotime($blog->created_at))}}</a></td>
+							<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{$blog->title}}</a></td>
+							<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{$blog->individual->firstname}} {{$blog->individual->surname}}</a></td>
+							<td><a href="{{url('/')}}/blog/{{date("Y",strtotime($blog->created_at))}}/{{date("m",strtotime($blog->created_at))}}/{{$blog->slug}}">{{count($blog->comments)}}</a></td>
+						</tr>
 			      @endforeach
 			  </tbody>
 		  </table>

@@ -93,6 +93,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 });
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('sermons', ['uses'=>'Bishopm\Churchsite\Http\Controllers\SeriesController@allseries','as'=>'allseries.show']);
     Route::get('blog/{slug}', ['uses'=>'Bishopm\Churchsite\Http\Controllers\BlogsController@show','as'=>'blogs.show']);
     Route::get('live', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@live','as'=>'site.live']);
     Route::get('meetingroom', ['uses'=>'Bishopm\Churchsite\Http\Controllers\VideosController@jitsi','as'=>'site.jitsi']);

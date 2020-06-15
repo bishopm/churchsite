@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Bishopm\Churchsite\Models\Setting;
 use DB;
 use Auth;
+use Carbon\Carbon;
 
 class VideosController extends Controller
 {
@@ -66,6 +67,12 @@ class VideosController extends Controller
     {
         $now=time();
         $data['videos'] = Video::where('broadcasttime','>=',$now - 3600 * 24)->orderBy('broadcasttime','ASC')->get();
+        $data['lastvideo'] = null;
+        if (!count($data['videos'])) {
+            $vid = Video::where('broadcasttime','<',$now)->orderBy('broadcasttime','DESC')->first();
+            $vid->timeago = Carbon::createFromTimestamp($vid->broadcasttime)->diffForHumans();
+            $data['lastvideo'] = $vid;
+        }
         return view('churchsite::site.live', $data);
     }
 }

@@ -22,7 +22,8 @@ class SermonsController extends Controller
     public function edit($id)
     {
         $sermon = Sermon::find($id);
-        return view('churchsite::sermons.edit',compact('sermon'));
+        $viewModel = new SermonViewModel(Auth::user(),$sermon->series, $sermon);
+        return view('churchsite::sermons.edit', $viewModel);
     }
 
     public function show($id)

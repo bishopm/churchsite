@@ -20,8 +20,9 @@ class CreateSermonsTable extends Migration
             $table->integer('series_id');
             $table->string('servicedate');
             $table->string('status');
-            $table->string('mp3');
-            $table->string('readings');
+            $table->string('mp3')->nullable();
+            $table->string('video')->nullable();
+            $table->string('readings')->nullable();
             $table->timestamps();
         });
     }

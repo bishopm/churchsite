@@ -6,7 +6,7 @@
 @section('content')
     <div class="row mt-4">
         <div class="col-md-8 text-left">
-            <h5><b>{{$blog->title}}</b> <small>{{$blog->author}}</small></h5>
+            <h5><b>{{$blog->title}}</b> <small><a href="{{route('site.people',[$blog->author])}}">{{$blog->author}}</a></small></h5>
             @foreach ($subjecttags as $ndx=>$tag)
                 <a href="{{url('/')}}/subject/{{$ndx}}"><span class="badge badge-pill badge-primary">{{$tag}}</span></a>
             @endforeach
@@ -16,16 +16,16 @@
         </div>
         <div class="col-md-4">
             @if (count($relatedBlogs))
-                <h5>Related blogs</h5>
-                <ul class="list-unstyled">
+                <h5 class="text-md-right">Related blogs</h5>
+                <ul class="list-unstyled text-md-right">
                     @foreach ($relatedBlogs as $rblog)
                         <li><a href="{{route('blogs.show',$rblog->slug)}}">{{$rblog->title}}</a></li>
                     @endforeach
                 </ul>
             @endif
             @if (count($relatedPages))
-                <h5>Related pages</h5>
-                <ul class="list-unstyled">
+                <h5 class="text-md-right">Related pages</h5>
+                <ul class="list-unstyled text-md-right">
                     @foreach ($relatedPages as $rpage)
                         <li><a href="{{url('/')}}/page/{{$rpage->slug}}">{{$rpage->title}}</a></li>
                     @endforeach

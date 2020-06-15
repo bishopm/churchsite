@@ -18,6 +18,12 @@ class SeriesController extends Controller
         return view('churchsite::series.index',compact('series'));
     }
 
+    public function allseries()
+    {
+        $series = Series::orderBy('created_at')->get();
+        return view('churchsite::site.sermons',compact('series'));
+    }
+
     public function edit($id)
     {
         $series = Series::find($id);
@@ -54,7 +60,7 @@ class SeriesController extends Controller
             $file = $request->file('seriesimage');
             $filename = time() . "." . $file->getClientOriginalExtension();
             $request->request->add(['image' => $filename]);      
-            $file->move(base_path() . '/storage/app/sermons/',$filename);  
+            $file->move(base_path() . '/storage/app/sermons/',$filename);
         }
         $request->request->add(['slug' => Str::slug($request->title, '-')]);
         $series->update($request->except('_token','_method','seriesimage'));
