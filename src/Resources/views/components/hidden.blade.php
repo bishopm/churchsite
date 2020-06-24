@@ -1,1 +1,0 @@
-{{ Form::text($name, $value, ['class' => 'form-control', 'id' => $name, 'style' => 'display:none;']) }}
